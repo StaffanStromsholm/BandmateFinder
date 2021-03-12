@@ -13,6 +13,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { withRouter } from 'react-router-dom';
 
+import plectrum from '../../images/plectrum.svg';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -53,9 +55,11 @@ const Header = props => {
           label={auth ? 'Logout' : 'Login'}
         /> */}
       </FormGroup>
-      <AppBar position="static" style={{backgroundColor: "#333"}}>
+      <AppBar position="static" style={{backgroundColor: "#cc0066"}}>
         <Toolbar>
-          
+        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <img onClick={() => handleMenuClick('/')} width="70px" src={plectrum}></img>
+          </IconButton>
           <Typography variant="h6" className={classes.title}>
             Bandmate Finder
           </Typography>

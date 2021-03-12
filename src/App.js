@@ -6,6 +6,7 @@ import EditProfile from './components/EditProfile/EditProfile.js';
 import SearchUsers from './components/SearchUsers/SearchUsers.js';
 import Login from './components/Authentication/Login.js';
 import SignUp from './components/Authentication/SignUp.js';
+import ViewUser from './components/ViewUser/ViewUser.js';
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
         </Route>
         <Route path="/search" exact>
           <SearchUsers />
+        </Route>
+        <Route path="/users/:username">
+          <ViewUser />
         </Route>
       </Switch>
     </div>
