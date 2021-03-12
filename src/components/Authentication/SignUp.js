@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,8 +36,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignIn = () => {
+  const endpoit = 'http://localhost:5000/register'
   const classes = useStyles();
   const { register, handleSubmit } = useForm(); 
+
+  const submitData = (data) => {
+    console.log(data);
+
+    axios.post(endpoit, data)
+    .then(response => console.log(response))
+    .catch(error => console.log(error))
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -48,7 +58,7 @@ const SignIn = () => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit((data) => alert(JSON.stringify(data)))}>
+        <form className={classes.form} noValidate onSubmit={handleSubmit((data) => submitData(data))}>
           
           <TextField
             variant="outlined"
@@ -56,10 +66,10 @@ const SignIn = () => {
             inputRef={register}
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
             autoFocus
           />
           <TextField
@@ -74,18 +84,6 @@ const SignIn = () => {
             id="password"
             autoComplete="current-password"
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={register}
-            required
-            fullWidth
-            name="password"
-            label="Password again"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
           <Button
             type="submit"
             fullWidth
@@ -93,14 +91,10 @@ const SignIn = () => {
             color="primary"
             className={classes.submit}
           >
-            Sign In
+            Sign up
           </Button>
           <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
+            
             <Grid item>
               <Link href="/login" variant="body2">
                 {"Already have an account? Login"}

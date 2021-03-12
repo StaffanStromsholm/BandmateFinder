@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
 import { withRouter } from 'react-router-dom';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,8 +37,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignIn = () => {
+  const endpoit = 'http://localhost:5000/login'
   const classes = useStyles();
   const { register, handleSubmit } = useForm();
+
+  const submitData = (data) => {
+    console.log(data);
+
+    axios.post(endpoit, data)
+    .then(response => console.log(response))
+    .catch(error => console.log(error))
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -49,17 +59,17 @@ const SignIn = () => {
         <Typography component="h1" variant="h5">
           Login
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit((data) => alert(JSON.stringify(data)))}>
+        <form className={classes.form} noValidate onSubmit={handleSubmit((data) => submitData(data))}>
           <TextField
             variant="outlined"
             margin="normal"
             inputRef={register}
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
             autoFocus
           />
           <TextField
@@ -74,10 +84,6 @@ const SignIn = () => {
             id="password"
             autoComplete="current-password"
           />
-          <FormControlLabel
-            control={<Checkbox inputRef={register} name="remember" color="primary" defaultValue={false}/>}
-            label="Remember me"
-          />
           <Button
             type="submit"
             fullWidth
@@ -88,8 +94,6 @@ const SignIn = () => {
             Login
           </Button>
           <Grid container>
-            <Grid item xs>
-            </Grid>
             <Grid item>
               <Link href="/signup" variant="body2">
                 {"Don't have an account? Sign Up"}
