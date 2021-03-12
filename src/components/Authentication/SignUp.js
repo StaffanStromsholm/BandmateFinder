@@ -13,7 +13,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
-import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 const SignIn = () => {
   const classes = useStyles();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm(); 
 
   return (
     <Container component="main" maxWidth="xs">
@@ -47,9 +46,10 @@ const SignIn = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Login
+          Sign up
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit((data) => alert(JSON.stringify(data)))}>
+          
           <TextField
             variant="outlined"
             margin="normal"
@@ -74,9 +74,17 @@ const SignIn = () => {
             id="password"
             autoComplete="current-password"
           />
-          <FormControlLabel
-            control={<Checkbox inputRef={register} name="remember" color="primary" defaultValue={false}/>}
-            label="Remember me"
+          <TextField
+            variant="outlined"
+            margin="normal"
+            inputRef={register}
+            required
+            fullWidth
+            name="password"
+            label="Password again"
+            type="password"
+            id="password"
+            autoComplete="current-password"
           />
           <Button
             type="submit"
@@ -85,14 +93,17 @@ const SignIn = () => {
             color="primary"
             className={classes.submit}
           >
-            Login
+            Sign In
           </Button>
           <Grid container>
             <Grid item xs>
+              <Link href="#" variant="body2">
+                Forgot password?
+              </Link>
             </Grid>
             <Grid item>
-              <Link href="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
+              <Link href="/login" variant="body2">
+                {"Already have an account? Login"}
               </Link>
             </Grid>
           </Grid>
@@ -102,4 +113,4 @@ const SignIn = () => {
   );
 }
 
-export default withRouter(SignIn);
+export default SignIn;
