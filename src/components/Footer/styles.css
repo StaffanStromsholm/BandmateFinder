@@ -1,0 +1,12 @@
+.Footer {
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(202, 0, 102);
+    padding: 1rem;
+}
+
+.flatIcons {
+    width: 100%;
+    text-align: center;
+    color: white;
+}

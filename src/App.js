@@ -7,6 +7,7 @@ import SearchUsers from './components/SearchUsers/SearchUsers.js';
 import Login from './components/Authentication/Login.js';
 import SignUp from './components/Authentication/SignUp.js';
 import ViewUser from './components/ViewUser/ViewUser.js';
+import Footer from './components/Footer/Footer.js';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <ViewUser />
         </Route>
       </Switch>
+      <Footer />
     </div>
   );
 }
