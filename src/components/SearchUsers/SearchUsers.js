@@ -103,7 +103,7 @@ const SearchUsers = () => {
 
             {users.map(user =>
 
-                <Grid item xs={3}>
+                <Grid item xs={12} sm={4}>
                     <Card style={{ margin: "1rem", minHeight: "300px" }} className={classes.root}>
                         <CardActionArea>
                             <CardContent>
