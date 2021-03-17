@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import './styles.css';
 import electricGuitar from '../../instrumentIcons/electric-guitar.png';
 import piano from '../../instrumentIcons/piano.png';
@@ -17,7 +17,6 @@ import cello from '../../instrumentIcons/cello.png';
 import accordion from '../../instrumentIcons/accordion.png';
 
 import axios from 'axios';
-import { CropDinSharp } from '@material-ui/icons';
 
 const instruments = {
   'Electric-guitar': electricGuitar,
@@ -52,7 +51,8 @@ const Map = ({ users }) => {
       try {
         const coords = await axios.get(`http://api.positionstack.com/v1/forward?access_key=${positionStackAPIKey}&query=${user.city}, ${user.postalCode}`)
         if (coords.data.data[0].latitude) {
-          resolve(coords.data.data[0]);
+          const data = { latitude: coords.data.data[0].latitude, longitude: coords.data.data[0].latitude, user }
+          resolve(data);
         } else {
           reject("Well that didn't go as planned");
         }
@@ -62,17 +62,11 @@ const Map = ({ users }) => {
       }
     })
   }
-
-  // Create a reference to the HTML element we want to put the map on
-  const mapRef = React.useRef(null);
-
-  /**
-   * Create the map instance
-   * While `useEffect` could also be used here, `useLayoutEffect` will render
-   * the map sooner
-   */
-  useEffect(async () => {
-
+ // Create a reference to the HTML element we want to put the map on
+ const mapRef = React.useRef(null);
+ 
+  useLayoutEffect(() => {
+    
     //empty the map in the beginning of each render
     document.getElementById('map').innerHTML = '';
 
@@ -85,17 +79,7 @@ const Map = ({ users }) => {
     const defaultLayers = platform.createDefaultLayers();
     var service = platform.getSearchService();
 
-    // Call the geocode method with the geocoding parameters,
-    // the callback and an error callback function (called if a
-    // communication error occurs):
     service.geocode({ q: location }, async (result) => {
-      // if(result.items.length === 0) return;
-      // var pinIcon = new H.map.Icon('https://www.flaticon.com/svg/static/icons/svg/484/484167.svg', { size: { w: 32, h: 32 } }),
-      //   coords = { lat: result.items[0].position.lat, lng: result.items[0].position.lng },
-      // marker = new H.map.Marker(coords, { icon: pinIcon });
-      // const marker2 = new H.map.Marker({lat: 53.17116, lng: 20.93265}, {icon: pinIcon})
-
-      // Render map with provided coordinates in the center
       const map = new H.Map(
         mapRef.current,
         defaultLayers.vector.normal.map,
@@ -104,33 +88,16 @@ const Map = ({ users }) => {
           center: { lat: 64.9146659, lng: 26.0672554 },
           pixelRatio: window.devicePixelRatio || 1
         });
-
-      for(const user of users) {
-        result = await getCoords(user).then(result => console.log(result.latitude));
+    //loop over users and mark them on the map  
+      for (const user of users) {
+        const response = await axios.get(`http://api.positionstack.com/v1/forward?access_key=${positionStackAPIKey}&query=${user.city}, ${user.postalCode}`)
+        const coords = { lat: response.data.data[0].latitude, lng: response.data.data[0].longitude }
+        const marker = new H.map.Marker(coords, { icon: new H.map.Icon((instruments[user.primaryInstrument] || pinImg), { size: { w: 32, h: 32 } }) });
+        map.addObject(marker);
       }
 
-      // const userCoords = await Promise.all(users.map(async(user) => {
-      //     console.log(user.primaryInstrument);
-      //     const coords = await axios.get(`http://api.positionstack.com/v1/forward?access_key=${positionStackAPIKey}&query=${user.city}, ${user.postalCode}`)
-      //     console.log(coords);
-      //     console.log(coords.data.data.length);
-      //     const data = {latitude: coords.data.data[0].latitude, longitude: coords.data.data[0].longitude, instrument: user.primaryInstrument};
-      //     return data;
-      // }))
-
-      // userCoords.forEach(userCoords => {
-      //     const coords = { lat: userCoords.latitude, lng: userCoords.longitude }
-      //     const marker = new H.map.Marker(coords, { icon:  new H.map.Icon((instruments[userCoords.instrument] || pinImg), { size: { w: 32, h: 32 } })});
-      //     map.addObject(marker);
-      // })
-
-      // MapEvents enables the event system
-      // Behavior implements default interactions for pan/zoom (also on mobile touch environments)
-      // This variable is unused and is present for explanatory purposes
+      //enables pan/zooming
       const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
-
-      // Create the default UI components to allow the user to interact with them
-      // This variable is unused
       const ui = H.ui.UI.createDefault(map, defaultLayers);
     })
   }, []); // This will run this hook every time the locations i updated
