@@ -115,7 +115,7 @@ const SearchUsers = () => {
                                     {user.summary}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary" component="p">
-                                    <strong>Intrument: </strong>{user.instrument}
+                                    <strong>Intrument: </strong>{user.primaryInstrument}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary" component="p">
                                     <strong>Skill Level: </strong>{user.skillLevel}

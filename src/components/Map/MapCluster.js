@@ -17,51 +17,61 @@ import cello from '../../instrumentIcons/cello.png';
 import accordion from '../../instrumentIcons/accordion.png';
 
 import axios from 'axios';
+import { CropDinSharp } from '@material-ui/icons';
 
 const instruments = {
-                        'Electric-guitar': electricGuitar,
-                        'Piano': piano,
-                        'Drum-set': drums,
-                        'Bass-guitar': bassGuitar,
-                        'Trumpet': trumpet,
-                        'Violin': violin,
-                        'Harmonica': harmonica,
-                        'Saxophone': saxophone,
-                        'Trombone': trombone,
-                        'Percussion': percussion,
-                        'Acoustic-guitar': acousticGuitar,
-                        'Contrabass': contrabass,
-                        'Flute': flute,
-                        'Cello': cello,
-                        'Accordion': accordion
-                    };
+  'Electric-guitar': electricGuitar,
+  'Piano': piano,
+  'Drums': drums,
+  'Bass': bassGuitar,
+  'Trumpet': trumpet,
+  'Violin': violin,
+  'Harmonica': harmonica,
+  'Saxophone': saxophone,
+  'Trombone': trombone,
+  'Percussion': percussion,
+  'Acoustic-guitar': acousticGuitar,
+  'Contrabass': contrabass,
+  'Flute': flute,
+  'Cello': cello,
+  'Accordion': accordion
+};
 
 const pinImg = 'https://www.flaticon.com/svg/static/icons/svg/484/484167.svg';
 
 
 const positionStackAPIKey = 'be2bf278ff4827f8917f1e0ac5f177f9';
 
-const Map = ({users}) => {
+const Map = ({ users }) => {
   const [location, setLocation] = useState('Helsinki');
+  const [locations, setLocations] = useState([]);
   const [arrayOfUserCoords, setArrayOfUserCoords] = useState([]);
-  
+
+  const getCoords = (user) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const coords = await axios.get(`http://api.positionstack.com/v1/forward?access_key=${positionStackAPIKey}&query=${user.city}, ${user.postalCode}`)
+        if (coords.data.data[0].latitude) {
+          resolve(coords.data.data[0]);
+        } else {
+          reject("Well that didn't go as planned");
+        }
+      }
+      catch (err) {
+        reject(err);
+      }
+    })
+  }
+
   // Create a reference to the HTML element we want to put the map on
   const mapRef = React.useRef(null);
-
-  const submitHandler = (e) => {
-    const userInput = document.getElementById('userInput').value;
-    e.preventDefault();
-    //return if user input is empty
-    if(!userInput) return;
-    setLocation(userInput);
-  }
 
   /**
    * Create the map instance
    * While `useEffect` could also be used here, `useLayoutEffect` will render
    * the map sooner
    */
-  useEffect(async() => {
+  useEffect(async () => {
 
     //empty the map in the beginning of each render
     document.getElementById('map').innerHTML = '';
@@ -78,38 +88,41 @@ const Map = ({users}) => {
     // Call the geocode method with the geocoding parameters,
     // the callback and an error callback function (called if a
     // communication error occurs):
-    service.geocode({ q: location }, async(result) => {
-      if(result.items.length === 0) return;
-      var pinIcon = new H.map.Icon('https://www.flaticon.com/svg/static/icons/svg/484/484167.svg', { size: { w: 32, h: 32 } }),
-        coords = { lat: result.items[0].position.lat, lng: result.items[0].position.lng },
-        marker = new H.map.Marker(coords, { icon: pinIcon });
-        // const marker2 = new H.map.Marker({lat: 53.17116, lng: 20.93265}, {icon: pinIcon})
+    service.geocode({ q: location }, async (result) => {
+      // if(result.items.length === 0) return;
+      // var pinIcon = new H.map.Icon('https://www.flaticon.com/svg/static/icons/svg/484/484167.svg', { size: { w: 32, h: 32 } }),
+      //   coords = { lat: result.items[0].position.lat, lng: result.items[0].position.lng },
+      // marker = new H.map.Marker(coords, { icon: pinIcon });
+      // const marker2 = new H.map.Marker({lat: 53.17116, lng: 20.93265}, {icon: pinIcon})
 
       // Render map with provided coordinates in the center
-      var map = new H.Map(
+      const map = new H.Map(
         mapRef.current,
         defaultLayers.vector.normal.map,
         {
           zoom: 4,
-          center: {lat: 64.9146659, lng: 26.0672554},
+          center: { lat: 64.9146659, lng: 26.0672554 },
           pixelRatio: window.devicePixelRatio || 1
         });
 
-        const userCoords = await Promise.all(users.map(async(user) => {
-            console.log(user.primaryInstrument);
-            const coords = await axios.get(`http://api.positionstack.com/v1/forward?access_key=${positionStackAPIKey}&query=${user.city}, ${user.postalCode}`)
-            const data = {latitude: coords.data.data[0].latitude, longitude: coords.data.data[0].longitude, instrument: user.primaryInstrument};
-            return data;
-        }))
-        
-        const userCoordsArray = await userCoords;
+      for(const user of users) {
+        result = await getCoords(user).then(result => console.log(result.latitude));
+      }
 
-        userCoordsArray.forEach(userCoords => {
-            const coords = { lat: userCoords.latitude, lng: userCoords.longitude }
-            marker = new H.map.Marker(coords, { icon:  new H.map.Icon((instruments[userCoords.instrument] || pinImg), { size: { w: 32, h: 32 } })});
-            map.addObject(marker);
-        })
+      // const userCoords = await Promise.all(users.map(async(user) => {
+      //     console.log(user.primaryInstrument);
+      //     const coords = await axios.get(`http://api.positionstack.com/v1/forward?access_key=${positionStackAPIKey}&query=${user.city}, ${user.postalCode}`)
+      //     console.log(coords);
+      //     console.log(coords.data.data.length);
+      //     const data = {latitude: coords.data.data[0].latitude, longitude: coords.data.data[0].longitude, instrument: user.primaryInstrument};
+      //     return data;
+      // }))
 
+      // userCoords.forEach(userCoords => {
+      //     const coords = { lat: userCoords.latitude, lng: userCoords.longitude }
+      //     const marker = new H.map.Marker(coords, { icon:  new H.map.Icon((instruments[userCoords.instrument] || pinImg), { size: { w: 32, h: 32 } })});
+      //     map.addObject(marker);
+      // })
 
       // MapEvents enables the event system
       // Behavior implements default interactions for pan/zoom (also on mobile touch environments)
@@ -120,7 +133,7 @@ const Map = ({users}) => {
       // This variable is unused
       const ui = H.ui.UI.createDefault(map, defaultLayers);
     })
-  }, []); // This will run this hook every time the location i updated
+  }, []); // This will run this hook every time the locations i updated
 
   return <div className="Map">
     <div id="map" ref={mapRef} style={{ height: "300px", width: "300px" }} />
