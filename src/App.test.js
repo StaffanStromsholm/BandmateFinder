@@ -1,7 +1,6 @@
 describe('Test individually', () => {
     const concat = (partA, partB) => partA + partB;
 
-
     test('first and second = firstsecond', () => {
         expect(concat('first', 'second')).toBe('firstsecond');
     })
