@@ -1,4 +1,5 @@
 import React, { useLayoutEffect, useState } from 'react';
+import { withRouter, Link } from 'react-router-dom';
 import './styles.css';
 import electricGuitar from '../../instrumentIcons/electric-guitar.png';
 import piano from '../../instrumentIcons/piano.png';
@@ -15,6 +16,7 @@ import contrabass from '../../instrumentIcons/contrabass.png';
 import flute from '../../instrumentIcons/flute.png';
 import cello from '../../instrumentIcons/cello.png';
 import accordion from '../../instrumentIcons/accordion.png';
+import './styles.css';
 
 import axios from 'axios';
 
@@ -62,6 +64,7 @@ const Map = ({ users }) => {
       }
     })
   }
+
  // Create a reference to the HTML element we want to put the map on
  const mapRef = React.useRef(null);
  
@@ -88,23 +91,59 @@ const Map = ({ users }) => {
           center: { lat: 64.9146659, lng: 26.0672554 },
           pixelRatio: window.devicePixelRatio || 1
         });
+        
     //loop over users and mark them on the map  
       for (const user of users) {
         const response = await axios.get(`http://api.positionstack.com/v1/forward?access_key=${positionStackAPIKey}&query=${user.city}, ${user.postalCode}`)
         const coords = { lat: response.data.data[0].latitude, lng: response.data.data[0].longitude }
-        const marker = new H.map.Marker(coords, { icon: new H.map.Icon((instruments[user.primaryInstrument] || pinImg), { size: { w: 32, h: 32 } }) });
+        const marker = new H.map.Marker(coords, { icon: new H.map.Icon((instruments[user.primaryInstrument] || pinImg), { size: { w: 22, h: 22 } }) });
         map.addObject(marker);
+        addInfoBubble(map, coords, user);
       }
+
+      function addMarkerToGroup(group, coordinate, html) {
+        var marker = new H.map.Marker(coordinate);
+        // add custom data to the marker
+        marker.setData(html);
+        group.addObject(marker);
+      }
+
+      function addInfoBubble(map, coords, user) {
+        var group = new H.map.Group();
+      
+        map.addObject(group);
+      
+        // add 'tap' event listener, that opens info bubble, to the group
+        group.addEventListener('tap', function (evt) {
+          console.log(evt.target.getData())
+          // event target is the marker itself, group is a parent event target
+          // for all objects that it contains
+          var bubble =  new H.ui.InfoBubble(evt.target.getGeometry(), {
+            // read custom data
+            content: evt.target.getData()
+          });
+          console.log(bubble);
+          // show info bubble
+          ui.addBubble(bubble);
+        }, false);
+      
+        addMarkerToGroup(group, coords, `<a href="/users/${user.username}">${user.username}</a>`
+          );
+      }
+
+      window.addEventListener('resize', () => map.getViewPort().resize());
+
 
       //enables pan/zooming
       const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
       const ui = H.ui.UI.createDefault(map, defaultLayers);
+
     })
   }, []); // This will run this hook every time the locations i updated
 
   return <div className="Map">
-    <div id="map" ref={mapRef} style={{ height: "300px", width: "300px" }} />
+    <div id="map" ref={mapRef} style={{ height: "400px", width: "400px"}} />
   </div>;
 };
 
-export default Map;
+export default withRouter(Map);

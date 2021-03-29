@@ -1,8 +1,11 @@
 .Footer {
+    position: relative;
     bottom: 0;
+    left: 0;
     width: 100%;
     background-color: rgb(202, 0, 102);
     padding: 1rem;
+    z-index: 1;
 }
 
 .flatIcons {

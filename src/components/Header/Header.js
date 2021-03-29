@@ -29,10 +29,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = props => {
     const { history } = props;
-  const classes = useStyles();
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+    const classes = useStyles();
+    const [auth, setAuth] = React.useState(true);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -44,7 +44,7 @@ const Header = props => {
 
   const handleMenuClick = (pageUrl) => {
       history.push(pageUrl);
-    setAnchorEl(null);
+      setAnchorEl(null);
   };
 
   return (

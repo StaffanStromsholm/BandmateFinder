@@ -94,7 +94,6 @@ const SearchUsers = () => {
     return (<div className="SearchUsers">
 
         <TextField label="search by instruments"> </TextField>
-
         <Grid container
             spacing={0}
             direction="row"
@@ -131,8 +130,12 @@ const SearchUsers = () => {
                 </Grid>
 
             )}
+            <Grid item>
+                 <MapCluster users={users} />
+
+            </Grid>
         </Grid>
-<MapCluster users={users} />
+
     </div>
     );
 }
