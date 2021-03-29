@@ -21,3 +21,4 @@ jobs:
           heroku_app_name: "bandmate_finder_client"
           heroku_email: "staffan.stromsholm@gmail.com"
         
+        
