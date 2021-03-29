@@ -3,11 +3,11 @@ describe('Test individually', () => {
 
 
     test('first and second = firstsecond', () => {
-        expect(concat('first', 'second')).toBe('firstecond');
+        expect(concat('first', 'second')).toBe('firstsecond');
     })
 
     test('je and st = jest', () => {
-        expect(concat('je', 's')).toBe('jest');
+        expect(concat('je', 'st')).toBe('jest');
     })
 
     test('1 and 2 = 3', () => {
