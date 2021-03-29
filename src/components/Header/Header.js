@@ -61,7 +61,7 @@ const Header = props => {
             <img onClick={() => handleMenuClick('/')} width="70px" src={plectrum}></img>
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Bandmate Finder
+            Bandmate FinderX
           </Typography>
           {auth && (
             <div>
