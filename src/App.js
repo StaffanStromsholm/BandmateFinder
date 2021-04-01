@@ -8,31 +8,45 @@ import Login from './components/Authentication/Login.js';
 import SignUp from './components/Authentication/SignUp.js';
 import ViewUser from './components/ViewUser/ViewUser.js';
 import Footer from './components/Footer/Footer.js';
+import LandingPage from './components/LandingPage/LandingPage';
 
 function App() {
   return (
     <div className="App">
-      <Header />
+      
       <Switch>
+
         <Route path="/login" exact>
+        <Header />
           <Login />
         </Route>
+
         <Route path="/signup" exact>
+        <Header />
           <SignUp />
         </Route>
+
         <Route exact path="/">
+          <LandingPage />
         </Route>
+
         <Route exact path="/edit-profile">
+        <Header />
           <EditProfile />
         </Route>
+
         <Route path="/search" exact>
+        <Header />
           <SearchUsers />
         </Route>
+
         <Route path="/users/:username">
+        <Header />
           <ViewUser />
         </Route>
+
       </Switch>
-      <Footer />
+      
     </div>
   );
 }

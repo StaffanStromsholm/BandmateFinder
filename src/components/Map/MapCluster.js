@@ -16,7 +16,18 @@ import contrabass from '../../instrumentIcons/contrabass.png';
 import flute from '../../instrumentIcons/flute.png';
 import cello from '../../instrumentIcons/cello.png';
 import accordion from '../../instrumentIcons/accordion.png';
-import './styles.css';
+import FilterByInstrument from './filterByInstrument';
+
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+
 
 import axios from 'axios';
 
@@ -43,33 +54,56 @@ const pinImg = 'https://www.flaticon.com/svg/static/icons/svg/484/484167.svg';
 
 const positionStackAPIKey = 'be2bf278ff4827f8917f1e0ac5f177f9';
 
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 140,
+  },
+});
+
 const Map = ({ users }) => {
   const [location, setLocation] = useState('Helsinki');
-  const [locations, setLocations] = useState([]);
-  const [arrayOfUserCoords, setArrayOfUserCoords] = useState([]);
+  const [clickedUser, setClickedUser] = useState(null);
+  const [filterByInstrument, setFilterByInstrument] = useState('');
+  const [filteredUsers, setFilteredUsers] = useState(users);
 
-  const getCoords = (user) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const coords = await axios.get(`http://api.positionstack.com/v1/forward?access_key=${positionStackAPIKey}&query=${user.city}, ${user.postalCode}`)
-        if (coords.data.data[0].latitude) {
-          const data = { latitude: coords.data.data[0].latitude, longitude: coords.data.data[0].latitude, user }
-          resolve(data);
-        } else {
-          reject("Well that didn't go as planned");
-        }
-      }
-      catch (err) {
-        reject(err);
-      }
-    })
+  const classes = useStyles();
+  const stringCharNr = 20
+
+  const setFilterByInstrumentHandler = (instrument) => {
+
+    if(instrument === 'All'){
+      setFilteredUsers(users);
+    } else {
+      setFilteredUsers(users.filter(user => user.primaryInstrument === instrument));
+      setFilterByInstrument(instrument);
+    }
   }
 
- // Create a reference to the HTML element we want to put the map on
- const mapRef = React.useRef(null);
- 
+  // const getCoords = (user) => {
+  //   return new Promise(async (resolve, reject) => {
+  //     try {
+  //       const coords = await axios.get(`http://api.positionstack.com/v1/forward?access_key=${positionStackAPIKey}&query=${user.city}, ${user.postalCode}`)
+  //       if (coords.data.data[0].latitude) {
+  //         const data = { latitude: coords.data.data[0].latitude, longitude: coords.data.data[0].latitude, user }
+  //         resolve(data);
+  //       } else {
+  //         reject("Well that didn't go as planned");
+  //       }
+  //     }
+  //     catch (err) {
+  //       reject(err);
+  //     }
+  //   })
+  // }
+
+  // Create a reference to the HTML element we want to put the map on
+  const mapRef = React.useRef(null);
+
   useLayoutEffect(() => {
-    
+
     //empty the map in the beginning of each render
     document.getElementById('map').innerHTML = '';
 
@@ -91,13 +125,13 @@ const Map = ({ users }) => {
           center: { lat: 64.9146659, lng: 26.0672554 },
           pixelRatio: window.devicePixelRatio || 1
         });
-        
-    //loop over users and mark them on the map  
-      for (const user of users) {
+
+      //loop over users and mark them on the map  
+      for (const user of filteredUsers) {
         const response = await axios.get(`http://api.positionstack.com/v1/forward?access_key=${positionStackAPIKey}&query=${user.city}, ${user.postalCode}`)
         const coords = { lat: response.data.data[0].latitude, lng: response.data.data[0].longitude }
-        const marker = new H.map.Marker(coords, { icon: new H.map.Icon((instruments[user.primaryInstrument] || pinImg), { size: { w: 22, h: 22 } }) });
-        map.addObject(marker);
+        // const marker = new H.map.Marker(coords, { icon: new H.map.Icon((instruments[user.primaryInstrument] || pinImg), { size: { w: 30, h: 30 }}) });
+        // map.addObject(marker);
         addInfoBubble(map, coords, user);
       }
 
@@ -110,25 +144,25 @@ const Map = ({ users }) => {
 
       function addInfoBubble(map, coords, user) {
         var group = new H.map.Group();
-      
+
         map.addObject(group);
-      
+
         // add 'tap' event listener, that opens info bubble, to the group
         group.addEventListener('tap', function (evt) {
-          console.log(evt.target.getData())
+          const clickedUser = evt.target.getData();
+          setClickedUser(users.find(user => user.username === evt.target.getData()));
           // event target is the marker itself, group is a parent event target
           // for all objects that it contains
-          var bubble =  new H.ui.InfoBubble(evt.target.getGeometry(), {
-            // read custom data
-            content: evt.target.getData()
-          });
-          console.log(bubble);
-          // show info bubble
-          ui.addBubble(bubble);
+          // var bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
+          //   // read custom data
+          //   content: evt.target.getData()
+          // });
+          // // show info bubble
+          // ui.addBubble(bubble);
         }, false);
-      
-        addMarkerToGroup(group, coords, `<a href="/users/${user.username}">${user.username}</a>`
-          );
+
+        addMarkerToGroup(group, coords, `${user.username}`
+        );
       }
 
       window.addEventListener('resize', () => map.getViewPort().resize());
@@ -139,11 +173,51 @@ const Map = ({ users }) => {
       const ui = H.ui.UI.createDefault(map, defaultLayers);
 
     })
-  }, []); // This will run this hook every time the locations i updated
+  }, [filteredUsers]);
 
-  return <div className="Map">
-    <div id="map" ref={mapRef} style={{ height: "400px", width: "400px"}} />
-  </div>;
+  return <div className="map-container">
+
+        <FilterByInstrument setFilterByInstrument={setFilterByInstrumentHandler} />
+
+          <div id="map" ref={mapRef} style={{ height: "40vh" }} />
+
+    {!clickedUser && <h4>Select a user</h4>}
+
+    {clickedUser &&
+      <Card className={classes.root}>
+        <CardActionArea>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+             {clickedUser.username} <img src={instruments[clickedUser.primaryInstrument]} style={{width: "60px", float: "right"}} />
+            </Typography>
+            
+            <Typography variant="body2" color="textSecondary" component="p">
+              
+              {(clickedUser.summary.length <= stringCharNr) &&
+                 clickedUser.summary}
+              
+              {(clickedUser.summary.length > stringCharNr) &&
+                 clickedUser.summary.substring(0, stringCharNr) + '...'}
+
+            </Typography>
+
+            <Typography variant="body2" color="textSecondary" component="p">
+
+            </Typography>
+
+
+          </CardContent>
+        </CardActionArea>
+        <CardActions>
+          <Button size="small" color="primary">
+            <Link to={`/users/${clickedUser.username}`}>Read More</Link>
+          </Button>
+        </CardActions>
+      </Card>
+    }
+
+  </div>
+
 };
 
 export default withRouter(Map);
