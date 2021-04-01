@@ -72,7 +72,7 @@ const Map = ({ users }) => {
   const classes = useStyles();
   const stringCharNr = 20
 
-  const setFilterByInstrumentHandler = (instrument) => {
+  const setFilterByInstrumentHandler = (instrument, users, setFilteredUsers, setFilterByInstrument) => {
 
     if(instrument === 'All'){
       setFilteredUsers(users);
@@ -82,97 +82,13 @@ const Map = ({ users }) => {
     }
   }
 
-  // const getCoords = (user) => {
-  //   return new Promise(async (resolve, reject) => {
-  //     try {
-  //       const coords = await axios.get(`http://api.positionstack.com/v1/forward?access_key=${positionStackAPIKey}&query=${user.city}, ${user.postalCode}`)
-  //       if (coords.data.data[0].latitude) {
-  //         const data = { latitude: coords.data.data[0].latitude, longitude: coords.data.data[0].latitude, user }
-  //         resolve(data);
-  //       } else {
-  //         reject("Well that didn't go as planned");
-  //       }
-  //     }
-  //     catch (err) {
-  //       reject(err);
-  //     }
-  //   })
-  // }
-
   // Create a reference to the HTML element we want to put the map on
   const mapRef = React.useRef(null);
 
   useLayoutEffect(() => {
 
-    //empty the map in the beginning of each render
-    document.getElementById('map').innerHTML = '';
+    renderMap(mapRef, location, filteredUsers, setClickedUser, users);
 
-    // `mapRef.current` will be `undefined` when this hook first runs; edge case that
-    if (!mapRef.current) return;
-    const H = window.H;
-    const platform = new H.service.Platform({
-      apikey: "4hZBBO5HOy_b0h_4xBfFNHrcIQEurBqR58bhr3nIgCs"
-    });
-    const defaultLayers = platform.createDefaultLayers();
-    var service = platform.getSearchService();
-
-    service.geocode({ q: location }, async (result) => {
-      const map = new H.Map(
-        mapRef.current,
-        defaultLayers.vector.normal.map,
-        {
-          zoom: 4,
-          center: { lat: 64.9146659, lng: 26.0672554 },
-          pixelRatio: window.devicePixelRatio || 1
-        });
-
-      //loop over users and mark them on the map  
-      for (const user of filteredUsers) {
-        const response = await axios.get(`http://api.positionstack.com/v1/forward?access_key=${positionStackAPIKey}&query=${user.city}, ${user.postalCode}`)
-        const coords = { lat: response.data.data[0].latitude, lng: response.data.data[0].longitude }
-        // const marker = new H.map.Marker(coords, { icon: new H.map.Icon((instruments[user.primaryInstrument] || pinImg), { size: { w: 30, h: 30 }}) });
-        // map.addObject(marker);
-        addInfoBubble(map, coords, user);
-      }
-
-      function addMarkerToGroup(group, coordinate, html) {
-        var marker = new H.map.Marker(coordinate);
-        // add custom data to the marker
-        marker.setData(html);
-        group.addObject(marker);
-      }
-
-      function addInfoBubble(map, coords, user) {
-        var group = new H.map.Group();
-
-        map.addObject(group);
-
-        // add 'tap' event listener, that opens info bubble, to the group
-        group.addEventListener('tap', function (evt) {
-          const clickedUser = evt.target.getData();
-          setClickedUser(users.find(user => user.username === evt.target.getData()));
-          // event target is the marker itself, group is a parent event target
-          // for all objects that it contains
-          // var bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
-          //   // read custom data
-          //   content: evt.target.getData()
-          // });
-          // // show info bubble
-          // ui.addBubble(bubble);
-        }, false);
-
-        addMarkerToGroup(group, coords, `${user.username}`
-        );
-      }
-
-      window.addEventListener('resize', () => map.getViewPort().resize());
-
-
-      //enables pan/zooming
-      const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
-      const ui = H.ui.UI.createDefault(map, defaultLayers);
-
-    })
   }, [filteredUsers]);
 
   return <div className="map-container">
@@ -181,31 +97,28 @@ const Map = ({ users }) => {
 
           <div id="map" ref={mapRef} style={{ height: "40vh" }} />
 
-    {!clickedUser && <h4>Select a user</h4>}
+        {!clickedUser && <h4>Select a user</h4>}
 
-    {clickedUser &&
-      <Card className={classes.root}>
-        <CardActionArea>
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-             {clickedUser.username} <img src={instruments[clickedUser.primaryInstrument]} style={{width: "60px", float: "right"}} />
-            </Typography>
-            
-            <Typography variant="body2" color="textSecondary" component="p">
+        {clickedUser &&
+        <Card className={classes.root}>
+          <CardActionArea>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+              {clickedUser.username} <img src={instruments[clickedUser.primaryInstrument]} style={{width: "60px", float: "right"}} />
+              </Typography>
               
-              {(clickedUser.summary.length <= stringCharNr) &&
-                 clickedUser.summary}
-              
-              {(clickedUser.summary.length > stringCharNr) &&
-                 clickedUser.summary.substring(0, stringCharNr) + '...'}
+              <Typography variant="body2" color="textSecondary" component="p">
+                
+                {(clickedUser.summary.length <= stringCharNr) &&
+                  clickedUser.summary}
+                
+                {(clickedUser.summary.length > stringCharNr) &&
+                  clickedUser.summary.substring(0, stringCharNr) + '...'}
 
-            </Typography>
+              </Typography>
 
             <Typography variant="body2" color="textSecondary" component="p">
-
             </Typography>
-
-
           </CardContent>
         </CardActionArea>
         <CardActions>
@@ -221,3 +134,75 @@ const Map = ({ users }) => {
 };
 
 export default withRouter(Map);
+
+
+//==========helper functions==============
+
+
+async function placeUsersOnMap(filteredUsers, addInfoBubble, map) {
+  for (const user of filteredUsers) {
+    const response = await axios.get(`http://api.positionstack.com/v1/forward?access_key=${positionStackAPIKey}&query=${user.city}, ${user.postalCode}`)
+    const coords = { lat: response.data.data[0].latitude, lng: response.data.data[0].longitude }
+    addInfoBubble(map, coords, user);
+  }
+}
+
+function addMarkerToGroup(group, coordinate, html, H) {
+  var marker = new H.map.Marker(coordinate);
+  // add custom data to the marker
+  marker.setData(html);
+  group.addObject(marker);
+}
+
+function renderMap(mapRef, location, filteredUsers, setClickedUser, users){
+  const H = window.H;
+    const platform = new H.service.Platform({
+      apikey: "4hZBBO5HOy_b0h_4xBfFNHrcIQEurBqR58bhr3nIgCs"
+    });
+    const defaultLayers = platform.createDefaultLayers();
+    const service = platform.getSearchService();
+
+    //empty the map in the beginning of each render
+    document.getElementById('map').innerHTML = '';
+
+    // `mapRef.current` will be `undefined` when this hook first runs; edge case that
+    if (!mapRef.current) return;
+    
+     //define the map
+
+    const map = new H.Map(
+      mapRef.current,
+      defaultLayers.vector.normal.map,
+      {
+        zoom: 4,
+        center: { lat: 64.9146659, lng: 26.0672554 },
+        pixelRatio: window.devicePixelRatio || 1
+      });
+
+      //start geocoding
+    service.geocode({ q: location }, async (result) => {
+
+      //loop over users and mark them on the map  
+      placeUsersOnMap(filteredUsers, addInfoBubble, map);
+
+      function addInfoBubble(map, coords, user) {
+        var group = new H.map.Group();
+        map.addObject(group);
+        // add 'tap' event listener, that opens info bubble, to the group
+        group.addEventListener('tap', function (evt) {
+          const clickedUser = evt.target.getData();
+          setClickedUser(users.find(user => user.username === evt.target.getData()));
+        }, false);
+
+        addMarkerToGroup(group, coords, `${user.username}`, H
+        );
+      }
+
+      window.addEventListener('resize', () => map.getViewPort().resize());
+
+      //enables pan/zooming
+      const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+      const ui = H.ui.UI.createDefault(map, defaultLayers);
+
+    })
+}
