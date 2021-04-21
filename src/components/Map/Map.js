@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './styles.css';
+import styles from './Map.module.scss';
 
 const Map = ({address}) => {
   const [location, setLocation] = useState(address);
@@ -67,7 +67,7 @@ const Map = ({address}) => {
     })
   }, [location, address]); // This will run this hook every time the location i updated
 
-  return <div className="Map">
+  return <div className={styles.mapContainer}>
     <div id="map" ref={mapRef} style={{ height: "300px", width: "300px" }} />
     <form id="map-form" onSubmit={submitHandler}>
     <div className="input-group-map">

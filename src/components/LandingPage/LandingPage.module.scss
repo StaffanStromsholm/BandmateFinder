@@ -1,0 +1,72 @@
+.LandingPage {
+    height: 100%;
+
+    #myVideo {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        z-index: -2;
+    }
+    
+    .overlay {
+        position: fixed;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.2);
+        color: #f1f1f1;
+        width: 100%;
+        height: 100vh;
+        padding: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        z-index: -1;
+        a {
+            text-decoration: none;
+            color: white;
+        }
+        .loginBtn {
+            text-align: center;
+        }
+        .signup {
+            text-decoration: underline;
+            text-shadow: 0 0 3px rgb(59, 59, 59);
+        }
+        .enterDiv{
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            // border: 1px solid black;
+            padding: 2rem;
+            background-color: rgba(240, 248, 255, 0.589);
+            background-color: #cc00665b;
+            border-radius: 40px;
+            margin-bottom: 1rem;
+
+            
+
+            .enter {
+                color: black;
+                display: block;
+                font-family: 'Finger Paint', cursive;
+                font-size: 3rem;
+                margin-bottom: -8rem;
+                color: white;
+                z-index: 4;
+                
+            }
+            
+            
+        }
+        .landingRockHand {
+            width: 200px;
+        }
+      }
+      
+}
+

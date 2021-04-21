@@ -1,23 +1,7 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import './styles.css';
-import electricGuitar from '../../instrumentIcons/electric-guitar.png';
-import piano from '../../instrumentIcons/piano.png';
-import drums from '../../instrumentIcons/drumset.png'
-import bassGuitar from '../../instrumentIcons/bass-guitar.png';
-import trumpet from '../../instrumentIcons/trumpet.png';
-import violin from '../../instrumentIcons/violin.png';
-import harmonica from '../../instrumentIcons/harmonica.png';
-import saxophone from '../../instrumentIcons/saxophone.png';
-import trombone from '../../instrumentIcons/trombone.png';
-import percussion from '../../instrumentIcons/percussion.png';
-import acousticGuitar from '../../instrumentIcons/acoustic-guitar.png';
-import contrabass from '../../instrumentIcons/contrabass.png';
-import flute from '../../instrumentIcons/flute.png';
-import cello from '../../instrumentIcons/cello.png';
-import accordion from '../../instrumentIcons/accordion.png';
+import styles from './Map.module.scss';
 import FilterByInstrument from './filterByInstrument';
-
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -27,27 +11,9 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-
+import {instruments} from '../../config';
 
 import axios from 'axios';
-
-const instruments = {
-  'Electric-guitar': electricGuitar,
-  'Piano': piano,
-  'Drums': drums,
-  'Bass': bassGuitar,
-  'Trumpet': trumpet,
-  'Violin': violin,
-  'Harmonica': harmonica,
-  'Saxophone': saxophone,
-  'Trombone': trombone,
-  'Percussion': percussion,
-  'Acoustic-guitar': acousticGuitar,
-  'Contrabass': contrabass,
-  'Flute': flute,
-  'Cello': cello,
-  'Accordion': accordion
-};
 
 const pinImg = 'https://www.flaticon.com/svg/static/icons/svg/484/484167.svg';
 
@@ -72,7 +38,7 @@ const Map = ({ users }) => {
   const classes = useStyles();
   const stringCharNr = 20
 
-  const setFilterByInstrumentHandler = (instrument, users, setFilteredUsers, setFilterByInstrument) => {
+  const setFilterByInstrumentHandler = (instrument) => {
 
     if(instrument === 'All'){
       setFilteredUsers(users);
@@ -91,7 +57,7 @@ const Map = ({ users }) => {
 
   }, [filteredUsers]);
 
-  return <div className="map-container">
+  return <div className={styles.mapContainer}>
 
         <FilterByInstrument setFilterByInstrument={setFilterByInstrumentHandler} />
 
@@ -109,11 +75,11 @@ const Map = ({ users }) => {
               
               <Typography variant="body2" color="textSecondary" component="p">
                 
-                {(clickedUser.summary.length <= stringCharNr) &&
-                  clickedUser.summary}
+                {(clickedUser.freeText.length <= stringCharNr) &&
+                  clickedUser.freeText}
                 
-                {(clickedUser.summary.length > stringCharNr) &&
-                  clickedUser.summary.substring(0, stringCharNr) + '...'}
+                {(clickedUser.freeText.length > stringCharNr) &&
+                  clickedUser.freeText.substring(0, stringCharNr) + '...'}
 
               </Typography>
 
@@ -141,8 +107,9 @@ export default withRouter(Map);
 
 async function placeUsersOnMap(filteredUsers, addInfoBubble, map) {
   for (const user of filteredUsers) {
-    const response = await axios.get(`http://api.positionstack.com/v1/forward?access_key=${positionStackAPIKey}&query=${user.city}, ${user.postalCode}`)
-    const coords = { lat: response.data.data[0].latitude, lng: response.data.data[0].longitude }
+    // const response = await axios.get(`http://api.positionstack.com/v1/forward?access_key=${positionStackAPIKey}&query=${user.city}, ${user.postalCode}`)
+    // const coords = { lat: response.data.data[0].latitude, lng: response.data.data[0].longitude }
+    const coords = { lat: user.geoLocation.latitude, lng: user.geoLocation.longitude }
     addInfoBubble(map, coords, user);
   }
 }
