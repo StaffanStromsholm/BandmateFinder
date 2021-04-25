@@ -12,7 +12,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import plectrum from '../../images/plectrum.svg';
 
@@ -28,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = props => {
-    const { history } = props;
+const Header = ({setToken}) => {
+    const history = useHistory();
     const classes = useStyles();
     const [auth, setAuth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -44,9 +45,15 @@ const Header = props => {
   };
 
   const handleMenuClick = (pageUrl) => {
-      history.push(pageUrl);
-      setAnchorEl(null);
+    history.push(pageUrl);
+    setAnchorEl(null);
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setToken('');
+    history.push('/login');
+  }
 
   return (
     <div className={classes.root}>
@@ -86,6 +93,7 @@ const Header = props => {
               >
                 <MenuItem onClick={() => handleMenuClick('/edit-profile')}>Edit profile</MenuItem>
                 <MenuItem onClick={() => handleMenuClick('/search')}>Search users</MenuItem>
+                <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
               </Menu>
             </div>
           )}
@@ -96,3 +104,7 @@ const Header = props => {
 }
 
 export default withRouter(Header);
+
+Header.propTypes = {
+  setToken: PropTypes.func.isRequired
+}

@@ -18,7 +18,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 import { instruments, skillLevels } from '../../config';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -40,9 +42,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignUp = () => {
+const SignUp = props => {
   const endpoit = 'http://localhost:5000/register'
   const classes = useStyles();
+  const { history } = props;
   const { register, handleSubmit } = useForm();
   const [instrument, setInstrument] = useState('');
   const [skillLevel, setSKillLevel] = useState('');
@@ -76,14 +79,15 @@ const SignUp = () => {
 
   const submitData = (data) => {
     const lookingFor = { bands, jams, studioWork, songWriting}
-    data.instrument = instrument;
+    data.primaryInstrument = instrument;
     data.skillLevel = skillLevel;
     data.lookingFor = lookingFor;
     data.freeText = freeText;
-    console.log(data)
 
     axios.post(endpoit, data)
-    .then(response => console.log(response))
+    .then(response => {
+      history.push('/login')
+    })
     .catch(error => console.log(error))
   }
 
@@ -250,4 +254,4 @@ const SignUp = () => {
   );
 }
 
-export default SignUp;
+export default withRouter(SignUp);

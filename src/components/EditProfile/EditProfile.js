@@ -1,20 +1,14 @@
-import React from 'react';
+import axios from 'axios';
+import React, {useEffect} from 'react';
 import './styles.css';
 
-const EditProfile = () => {
+const EditProfile = ({user}) => {
+    useEffect(() => {
+        axios.get('')
+    })
     return(
         <div className="EditProfile">
-            Edit profilepage
-            Edit profilepage
-            Edit profilepage
-            Edit profilepage
-            Edit profilepage
-            Edit profilepage
-            Edit profilepage
-            Edit profilepage
-            Edit profilepage
-            Edit profilepage
-            Edit profilepage
+            {user}
         </div>
     )
 }

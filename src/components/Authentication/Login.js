@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,8 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,17 +37,42 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignIn = () => {
+//put this in useEffect?
+async function loginUser(credentials) {
+  return fetch('http://localhost:5000/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials)
+  })
+    .then(data => data.json())
+ }
+
+const Login = ({setToken, setUser}) => {
   const endpoit = 'http://localhost:5000/login'
   const classes = useStyles();
   const { register, handleSubmit } = useForm();
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+  const history = useHistory();
 
-  const submitData = (data) => {
-    console.log(data);
+  const submitData = async(data) => {
+    // e.preventDefault();
+    const token = await loginUser({
+      username,
+      password
+    });
+    console.log(token);
+    setToken(token);
+    setUser(token.user)
+    history.push('/search');
+    //old handler
+    // console.log(data);
 
-    axios.post(endpoit, data)
-    .then(response => console.log(response))
-    .catch(error => console.log(error))
+    // axios.post(endpoit, data)
+    // .then(response => console.log(response))
+    // .catch(error => console.log(error))
   }
 
   return (
@@ -71,6 +97,7 @@ const SignIn = () => {
             name="username"
             autoComplete="username"
             autoFocus
+            onChange={event => setUsername(event.target.value)}
           />
           <TextField
             variant="outlined"
@@ -83,6 +110,7 @@ const SignIn = () => {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={event => setPassword(event.target.value)}
           />
           <Button
             type="submit"
@@ -106,4 +134,8 @@ const SignIn = () => {
   );
 }
 
-export default withRouter(SignIn);
+export default Login;
+
+Login.propTypes = {
+  setToken: PropTypes.func.isRequired
+}
