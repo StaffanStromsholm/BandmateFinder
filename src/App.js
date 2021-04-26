@@ -12,7 +12,7 @@ import LandingPage from './components/LandingPage/LandingPage';
 import useToken from './Hooks/useToken';
 
 function App() {
-  const { token, setToken } = useToken();
+  const { token, setToken, user, setUser } = useToken();
   const [loggedInUser, setLoggedInUser] = useState();
   
   const setLoggedInUserHandler = (user) => {
@@ -23,11 +23,11 @@ function App() {
   if (!token) return (
     <Switch>
       <Route path="/login" exact>
-        <Header setToken={setToken}/>
-        <Login setUser={setLoggedInUserHandler} setToken={setToken} />
+        <Header setUser={setUser} setToken={setToken}/>
+        <Login setUser={setUser} setToken={setToken} />
       </Route>
       <Route path="/signup" exact>
-        <Header setToken={setToken} />
+        <Header setUser={setUser} setToken={setToken} />
         <SignUp setToken={setToken} />
       </Route>
       <Redirect to='/login' />
@@ -40,32 +40,32 @@ function App() {
       <Switch>
 
         <Route path="/login" exact>
-          <Header setToken={setToken} />
-          <Login setUser={setLoggedInUserHandler} setToken={setToken} />
+          <Header user={user} setToken={setToken} />
+          <Login setUser={setUser} setToken={setToken} />
         </Route>
 
         <Route path="/signup" exact>
-          <Header setToken={setToken} />
+          <Header user={user} setToken={setToken} />
           <SignUp setToken={setToken} />
         </Route>
 
         <Route exact path="/">
-          <Header setToken={setToken} />
+          <Header user={user} setToken={setToken} />
           <LandingPage />
         </Route>
 
         <Route exact path="/edit-profile">
-          <Header setToken={setToken} />
-          <EditProfile user={loggedInUser} />
+          <Header user={user} setToken={setToken} />
+          <EditProfile />
         </Route>
 
         <Route path="/search" exact>
-          <Header setToken={setToken} />
+          <Header user={user} setToken={setToken} />
           <SearchUsers />
         </Route>
 
         <Route path="/users/:username">
-          <Header setToken={setToken} />
+          <Header user={user} setToken={setToken} />
           <ViewUser />
         </Route>
       </Switch>

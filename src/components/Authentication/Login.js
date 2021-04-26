@@ -137,5 +137,6 @@ const Login = ({setToken, setUser}) => {
 export default Login;
 
 Login.propTypes = {
-  setToken: PropTypes.func.isRequired
+  setToken: PropTypes.func.isRequired,
+  setUser: PropTypes.func.isRequired,
 }

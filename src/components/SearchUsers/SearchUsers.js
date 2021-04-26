@@ -27,16 +27,7 @@ const SearchUsers = () => {
     }
 
     return (<div className="SearchUsers">
-       
-        <Grid container
-            spacing={0}
-            direction="row">
-            <Grid item>
-            
-                <MapCluster users={users} />
-            </Grid>
-        </Grid>
-
+        <MapCluster users={users} />
     </div>
     );
 }

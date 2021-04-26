@@ -3,15 +3,7 @@ import { withRouter, Link } from 'react-router-dom';
 import styles from './Map.module.scss';
 import FilterByInstrument from './filterByInstrument';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import {instruments} from '../../config';
+import { instruments } from '../../config';
 
 import axios from 'axios';
 
@@ -40,7 +32,7 @@ const Map = ({ users }) => {
 
   const setFilterByInstrumentHandler = (instrument) => {
 
-    if(instrument === 'All'){
+    if (instrument === 'All') {
       setFilteredUsers(users);
     } else {
       setFilteredUsers(users.filter(user => user.primaryInstrument === instrument));
@@ -58,44 +50,38 @@ const Map = ({ users }) => {
   }, [filteredUsers]);
 
   return <div className={styles.mapContainer}>
+            <div>
+              <FilterByInstrument setFilterByInstrument={setFilterByInstrumentHandler} />
+              <div id="map" ref={mapRef} style={{ height: "40vh", width: "300px" }} />
+            </div>
 
-        <FilterByInstrument setFilterByInstrument={setFilterByInstrumentHandler} />
+            <div className={styles.userInfoWrapper}>
+              {!clickedUser && <h2>Select a user from the map</h2>}
 
-          <div id="map" ref={mapRef} style={{ height: "40vh" }} />
+              {clickedUser &&
+                <div className={styles.userCard}>
 
-        {!clickedUser && <h4>Select a user</h4>}
+                  <h2>
+                    {clickedUser.username} <img src={instruments[clickedUser.primaryInstrument]} style={{ width: "60px", float: "right" }} />
+                  </h2>
 
-        {clickedUser &&
-        <Card className={classes.root}>
-          <CardActionArea>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-              {clickedUser.username} <img src={instruments[clickedUser.primaryInstrument]} style={{width: "60px", float: "right"}} />
-              </Typography>
-              
-              <Typography variant="body2" color="textSecondary" component="p">
-                
-                {(clickedUser.freeText.length <= stringCharNr) &&
-                  clickedUser.freeText}
-                
-                {(clickedUser.freeText.length > stringCharNr) &&
-                  clickedUser.freeText.substring(0, stringCharNr) + '...'}
+                  <p>
 
-              </Typography>
+                    {(clickedUser.freeText.length <= stringCharNr) &&
+                      clickedUser.freeText}
 
-            <Typography variant="body2" color="textSecondary" component="p">
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary">
-            <Link to={`/users/${clickedUser.username}`}>Read More</Link>
-          </Button>
-        </CardActions>
-      </Card>
-    }
+                    {(clickedUser.freeText.length > stringCharNr) &&
+                      clickedUser.freeText.substring(0, stringCharNr) + '...'}
 
+                  </p>
+
+                  <Link to={`/users/${clickedUser.username}`}>Read More</Link>
+
+                </div>
+              }
+        </div>
   </div>
+
 
 };
 
@@ -121,55 +107,54 @@ function addMarkerToGroup(group, coordinate, html, H) {
   group.addObject(marker);
 }
 
-function renderMap(mapRef, location, filteredUsers, setClickedUser, users){
+function renderMap(mapRef, location, filteredUsers, setClickedUser, users) {
   const H = window.H;
-    const platform = new H.service.Platform({
-      apikey: "4hZBBO5HOy_b0h_4xBfFNHrcIQEurBqR58bhr3nIgCs"
+  const platform = new H.service.Platform({
+    apikey: "4hZBBO5HOy_b0h_4xBfFNHrcIQEurBqR58bhr3nIgCs"
+  });
+  const defaultLayers = platform.createDefaultLayers();
+  const service = platform.getSearchService();
+
+  //empty the map in the beginning of each render
+  mapRef.current.innerHTML = '';
+
+  // `mapRef.current` will be `undefined` when this hook first runs; edge case that
+  if (!mapRef.current) return;
+
+  //define the map
+
+  const map = new H.Map(
+    mapRef.current,
+    defaultLayers.vector.normal.map,
+    {
+      zoom: 4,
+      center: { lat: 64.9146659, lng: 26.0672554 },
+      pixelRatio: window.devicePixelRatio || 1
     });
-    const defaultLayers = platform.createDefaultLayers();
-    const service = platform.getSearchService();
 
-    //empty the map in the beginning of each render
-    document.getElementById('map').innerHTML = '';
+  //start geocoding
+  service.geocode({ q: location }, async (result) => {
 
-    // `mapRef.current` will be `undefined` when this hook first runs; edge case that
-    if (!mapRef.current) return;
-    
-     //define the map
+    //loop over users and mark them on the map  
+    placeUsersOnMap(filteredUsers, addInfoBubble, map);
 
-    const map = new H.Map(
-      mapRef.current,
-      defaultLayers.vector.normal.map,
-      {
-        zoom: 4,
-        center: { lat: 64.9146659, lng: 26.0672554 },
-        pixelRatio: window.devicePixelRatio || 1
-      });
+    function addInfoBubble(map, coords, user) {
+      var group = new H.map.Group();
+      map.addObject(group);
+      // add 'tap' event listener, that opens info bubble, to the group
+      group.addEventListener('tap', function (evt) {
+        const clickedUser = evt.target.getData();
+        setClickedUser(users.find(user => user.username === evt.target.getData()));
+      }, false);
 
-      //start geocoding
-    service.geocode({ q: location }, async (result) => {
+      addMarkerToGroup(group, coords, `${user.username}`, H
+      );
+    }
 
-      //loop over users and mark them on the map  
-      placeUsersOnMap(filteredUsers, addInfoBubble, map);
+    window.addEventListener('resize', () => map.getViewPort().resize());
 
-      function addInfoBubble(map, coords, user) {
-        var group = new H.map.Group();
-        map.addObject(group);
-        // add 'tap' event listener, that opens info bubble, to the group
-        group.addEventListener('tap', function (evt) {
-          const clickedUser = evt.target.getData();
-          setClickedUser(users.find(user => user.username === evt.target.getData()));
-        }, false);
-
-        addMarkerToGroup(group, coords, `${user.username}`, H
-        );
-      }
-
-      window.addEventListener('resize', () => map.getViewPort().resize());
-
-      //enables pan/zooming
-      const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
-      const ui = H.ui.UI.createDefault(map, defaultLayers);
-
-    })
+    //enables pan/zooming
+    const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+    const ui = H.ui.UI.createDefault(map, defaultLayers);
+  })
 }

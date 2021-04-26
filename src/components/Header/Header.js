@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = ({setToken}) => {
+const Header = ({setToken, loggedInUser}) => {
     const history = useHistory();
     const classes = useStyles();
     const [auth, setAuth] = React.useState(true);
@@ -67,14 +67,20 @@ const Header = ({setToken}) => {
         <Toolbar>
         <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <img onClick={() => handleMenuClick('/')} width="70px" src={plectrum}></img>
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            Bandmate Finder
-          </Typography>
-          {auth && (
-            <div>
-              <IconButton onClick={handleMenu} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+        </IconButton>
+        <Typography variant="h6" className={classes.title}>
+          Bandmate Finder
+        </Typography>
+        {auth && (
+          <div>
+            
+            <IconButton onClick={handleMenu} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+              {loggedInUser && <Typography variant="h6" className={classes.title} style={{marginRight:"1rem"}}>
+                {loggedInUser}
+            </Typography>}
+              
             <MenuIcon />
+            
           </IconButton>
               <Menu
                 id="menu-appbar"
@@ -106,5 +112,6 @@ const Header = ({setToken}) => {
 export default withRouter(Header);
 
 Header.propTypes = {
-  setToken: PropTypes.func.isRequired
+  setToken: PropTypes.func.isRequired,
+  setUser: PropTypes.func.isRequired,
 }
