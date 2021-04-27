@@ -71,7 +71,6 @@ const Header = ({setToken, loggedInUser}) => {
             <img onClick={() => handleMenuClick('/')} width="70px" src={plectrum}></img>
         </IconButton>
         <Typography variant="h6" className={classes.title}>
-          Bandmate Finder
         </Typography>
         {token && (
           <div>

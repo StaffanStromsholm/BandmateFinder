@@ -1,14 +1,13 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import styles from './Map.module.scss';
-import FilterByInstrument from './filterByInstrument';
+import FilterByInstrument from './FilterByInstrument';
 import { makeStyles } from '@material-ui/core/styles';
 import { instruments } from '../../config';
 
 import axios from 'axios';
 
 const pinImg = 'https://www.flaticon.com/svg/static/icons/svg/484/484167.svg';
-
 
 const positionStackAPIKey = 'be2bf278ff4827f8917f1e0ac5f177f9';
 
@@ -26,12 +25,15 @@ const Map = ({ users }) => {
   const [clickedUser, setClickedUser] = useState(null);
   const [filterByInstrument, setFilterByInstrument] = useState('');
   const [filteredUsers, setFilteredUsers] = useState(users);
+  const [showUserList, setShowUserList] = useState(false);
+  const [showUserCard, setShowUserCard] = useState(false);
 
   const classes = useStyles();
   const stringCharNr = 20
 
   const setFilterByInstrumentHandler = (instrument) => {
-
+    setShowUserCard(false);
+    setShowUserList(true);
     if (instrument === 'All') {
       setFilteredUsers(users);
     } else {
@@ -45,41 +47,44 @@ const Map = ({ users }) => {
 
   useLayoutEffect(() => {
 
-    renderMap(mapRef, location, filteredUsers, setClickedUser, users);
+    renderMap(mapRef, location, filteredUsers, setClickedUser, users, setShowUserList, setShowUserCard);
 
   }, [filteredUsers]);
 
   return <div className={styles.mapContainer}>
-            <div>
-              <FilterByInstrument setFilterByInstrument={setFilterByInstrumentHandler} />
-              <div id="map" ref={mapRef} style={{ height: "40vh", width: "300px" }} />
-            </div>
+    
 
-            <div className={styles.userInfoWrapper}>
-              {!clickedUser && <h2>Select a user from the map</h2>}
+    <div className={styles.mapAndSearch}>
+    {!clickedUser && <h2>Select a user from the map</h2>}
 
-              {clickedUser &&
-                <div className={styles.userCard}>
+    <div className={styles.userInfoWrapper}>
+    <div>
+      <div id="map" className={styles.map} ref={mapRef} />
+    </div>
+    <FilterByInstrument setFilterByInstrument={setFilterByInstrumentHandler} />
+    </div>
 
-                  <h2>
-                    {clickedUser.username} <img src={instruments[clickedUser.primaryInstrument]} style={{ width: "60px", float: "right" }} />
-                  </h2>
+      {showUserList && <div className={styles.userList}>
+                    {filteredUsers.sort().map(user =><div className={styles.userList}><img className={styles.smallImg} src={instruments[user.primaryInstrument]} /><Link to={`/users/${user.username}`}>{user.username} - {user.city}</Link></div> )}
+        </div>}
 
-                  <p>
+      {clickedUser && showUserCard &&
+        <div className={styles.ViewUser}>
+          <div className={styles.instrumentWrapper}><img className={styles.instrument} src={instruments[clickedUser.primaryInstrument]} /></div>
+          <div className={styles.infoWrapper}>
+            <h1>{clickedUser.username} </h1>
 
-                    {(clickedUser.freeText.length <= stringCharNr) &&
-                      clickedUser.freeText}
-
-                    {(clickedUser.freeText.length > stringCharNr) &&
-                      clickedUser.freeText.substring(0, stringCharNr) + '...'}
-
-                  </p>
-
-                  <Link to={`/users/${clickedUser.username}`}>Read More</Link>
-
-                </div>
-              }
+            <h3>{clickedUser.primaryInstrument}</h3>
+            <h3>{clickedUser.city}</h3>
+            <h3>Looking for: {clickedUser.lookingFor.bands && 'bands'}{clickedUser.lookingFor.jams && ', jams'}{clickedUser.lookingFor.studioWork && ', studio work'}{clickedUser.lookingFor.songWriting && ', song writing'}</h3>
+            <h3>{clickedUser.skillLevel}</h3>
+            <h3>{clickedUser.freeText}</h3>
+            <Link to={`/users/${clickedUser.username}`}>Read More</Link>
+          </div>
         </div>
+      }
+      
+    </div>
   </div>
 
 
@@ -107,7 +112,7 @@ function addMarkerToGroup(group, coordinate, html, H) {
   group.addObject(marker);
 }
 
-function renderMap(mapRef, location, filteredUsers, setClickedUser, users) {
+function renderMap(mapRef, location, filteredUsers, setClickedUser, users, setShowUserList, setShowUserCard) {
   const H = window.H;
   const platform = new H.service.Platform({
     apikey: "4hZBBO5HOy_b0h_4xBfFNHrcIQEurBqR58bhr3nIgCs"
@@ -145,6 +150,8 @@ function renderMap(mapRef, location, filteredUsers, setClickedUser, users) {
       group.addEventListener('tap', function (evt) {
         const clickedUser = evt.target.getData();
         setClickedUser(users.find(user => user.username === evt.target.getData()));
+        setShowUserList(false);
+        setShowUserCard(true)
       }, false);
 
       addMarkerToGroup(group, coords, `${user.username}`, H

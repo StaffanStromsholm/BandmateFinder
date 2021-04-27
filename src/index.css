@@ -13,6 +13,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(27, 27, 27);
   color: white;
+  font-family: 'Exo', sans-serif;
 }
 
 code {

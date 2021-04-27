@@ -121,11 +121,11 @@ const EditProfile = props => {
             <h1>Edit Profile</h1>
             {console.log(user)}
             <img src={user.photo} />
-            <Container component="main" maxWidth="xs">
+            <Container style={{backgroundColor:"white", padding: "1rem", borderRadius:"30px"}} component="main" maxWidth="xs">
                 <CssBaseline />
-                <div className={classes.paper}>
+                <div >
                     
-                    <form className={classes.form} noValidate onSubmit={handleSubmit((data) => submitData(data))}>
+                    <form noValidate onSubmit={handleSubmit((data) => submitData(data))}>
 
                         <TextField
                             variant="outlined"
@@ -206,7 +206,7 @@ const EditProfile = props => {
                             fullWidth
                             id="mainInstrument"
                             select
-                            // value={instrument || user.primaryInstrument}
+                            value={instrument || user.primaryInstrument}
                             name="instrument"
                             label="Instrument"
                             type="text"

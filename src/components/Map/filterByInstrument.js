@@ -1,11 +1,12 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, StylesProvider } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import {instruments} from '../../config.js';
+import styles from './FilterByInstrument.module.scss';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -16,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     minWidth: 120,
   },
+  multiLineColor: {
+    
+  } 
 }));
 
 export default function FilterByInstrument({setFilterByInstrument}) {
@@ -38,12 +42,12 @@ export default function FilterByInstrument({setFilterByInstrument}) {
   };
 
   return (
-    <div>
-      <Button className={classes.button} onClick={handleOpen}>
-        Search by instrument
-      </Button>
-      <FormControl className={classes.formControl}>
-        <InputLabel id="demo-controlled-open-select-label">Instrument</InputLabel>
+    <div className={styles.FilterByInstrument}>
+
+      <h3>Search By Instrument</h3>
+          
+      <FormControl variant="outlined" className={classes.formControl}>
+        {/* <InputLabel id="demo-controlled-open-select-label">Instrument</InputLabel> */}
         <Select
           labelId="demo-controlled-open-select-label"
           id="demo-controlled-open-select"
@@ -52,6 +56,7 @@ export default function FilterByInstrument({setFilterByInstrument}) {
           onOpen={handleOpen}
           value={value}
           onChange={handleChange}
+          style={{backgroundColor: "#fff", width: "290px", padding: "0", margin: "0"}}
         >
           <MenuItem value="All">
             <em>All</em>
