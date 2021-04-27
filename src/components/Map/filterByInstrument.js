@@ -5,6 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
+import {instruments} from '../../config.js';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -55,9 +56,12 @@ export default function FilterByInstrument({setFilterByInstrument}) {
           <MenuItem value="All">
             <em>All</em>
           </MenuItem>
-          <MenuItem value="Piano">Piano</MenuItem>
-          <MenuItem value="Drums">Drums</MenuItem>
-          <MenuItem value="Electric-guitar">Electric-guitar</MenuItem>
+          {Object.keys(instruments).map((key, index) => (
+            <MenuItem key={index} value={key}>
+              {key}
+            </MenuItem>
+          ))}
+
         </Select>
       </FormControl>
     </div>

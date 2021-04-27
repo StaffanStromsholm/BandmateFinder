@@ -14,8 +14,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { withRouter, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import useToken from '../../Hooks/useToken';
 
-import plectrum from '../../images/plectrum.svg';
+import plectrum from '../../images/plectrumLogo.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +36,7 @@ const Header = ({setToken, loggedInUser}) => {
     const [auth, setAuth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
+    const { token } = useToken();
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -71,7 +73,7 @@ const Header = ({setToken, loggedInUser}) => {
         <Typography variant="h6" className={classes.title}>
           Bandmate Finder
         </Typography>
-        {auth && (
+        {token && (
           <div>
             
             <IconButton onClick={handleMenu} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">

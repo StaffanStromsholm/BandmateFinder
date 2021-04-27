@@ -22,6 +22,10 @@ function App() {
 
   if (!token) return (
     <Switch>
+      <Route path="/" exact>
+        <Header setUser={setUser} setToken={setToken}/>
+        <LandingPage />
+      </Route>
       <Route path="/login" exact>
         <Header setUser={setUser} setToken={setToken}/>
         <Login setUser={setUser} setToken={setToken} />

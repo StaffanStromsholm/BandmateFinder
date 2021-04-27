@@ -21,6 +21,7 @@ import axios from 'axios';
 import { withRouter, useHistory } from 'react-router-dom';
 import { instruments, skillLevels, citiesInFinland } from '../../config';
 import styles from './EditProfile.module.scss';
+import * as api from '../../api/index.js';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -47,7 +48,7 @@ const EditProfile = props => {
     // const { history } = props;
     const history = useHistory();
     const { register, handleSubmit } = useForm();
-    const [instrument, setInstrument] = useState(null);
+    const [instrument, setInstrument] = useState();
     const [skillLevel, setSKillLevel] = useState('');
     const [city, setCity] = useState();
     const [checkedState, setCheckedState] = useState({
@@ -97,24 +98,20 @@ const EditProfile = props => {
 
         console.log(data);
 
-        axios.patch(`http://localhost:5000/user/${user._id}`, data)
-            .then(response => {
-                console.log(response)
-                history.push('/search')
-            })
-            .catch(error => console.log(error))
+        api.updateUser(user._id, data)
+        .then(response => console.log(response));
     }
 
     useEffect(() => {
-        async function fetchData() {
-            setIsLoading(true);
-            const user = localStorage.getItem('user');
-            const parsedUser = JSON.parse(user);
-            axios.get(`http://localhost:5000/getuser/${parsedUser}`)
-                .then(result => setUser(result.data.user)).then(() => setIsLoading(false))
-        }
-        fetchData();
+        setIsLoading(true);
+        const user = localStorage.getItem('user');
+        const parsedUser = JSON.parse(user);
 
+        api.fetchUser(parsedUser)
+        .then(response => setUser(response.data)).then(() => {
+            setIsLoading(false)
+            setInstrument(user.primaryInstrument);
+        })
     }, [])
 
     if (isLoading || !user) return <h1 className={styles.EditProfile}>Loading...</h1>
@@ -123,6 +120,7 @@ const EditProfile = props => {
         <div className={styles.EditProfile}>
             <h1>Edit Profile</h1>
             {console.log(user)}
+            <img src={user.photo} />
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <div className={classes.paper}>
@@ -142,7 +140,7 @@ const EditProfile = props => {
                             autoFocus
                             defaultValue={user.username}
                         />
-                        <TextField
+                        {/* <TextField
                             variant="outlined"
                             margin="normal"
                             inputRef={register}
@@ -165,7 +163,7 @@ const EditProfile = props => {
                             type="password"
                             id="confirmPassword"
                             autoComplete="current-password"
-                        />
+                        /> */}
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -208,7 +206,7 @@ const EditProfile = props => {
                             fullWidth
                             id="mainInstrument"
                             select
-                            value={instrument || user.primaryInstrument}
+                            // value={instrument || user.primaryInstrument}
                             name="instrument"
                             label="Instrument"
                             type="text"

@@ -20,6 +20,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import { instruments, skillLevels } from '../../config';
+import * as api from '../../api/index.js';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -56,6 +57,7 @@ const SignUp = props => {
     studioWork: false,
   });
   const [freeText, setFreeText] = useState('');
+  const [photo, setPhoto] = useState();
 
   const handleLookingForChange = (event) => {
     setCheckedState({ ...checkedState, [event.target.name]: event.target.checked });
@@ -77,18 +79,32 @@ const SignUp = props => {
     setFreeText(e.target.value);
   }
 
+  const handlePhoto = (e) => {
+    setPhoto(e.target.files[0]);
+    console.log(e.target.files[0])
+  }
+
   const submitData = (data) => {
+    // e.preventDefault();
+    // const formData = new FormData();
+    // formData.append('photo', photo);
+    
     const lookingFor = { bands, jams, studioWork, songWriting}
     data.primaryInstrument = instrument;
     data.skillLevel = skillLevel;
     data.lookingFor = lookingFor;
     data.freeText = freeText;
+    // data.photo = photo;
 
-    axios.post(endpoit, data)
-    .then(response => {
-      history.push('/login')
-    })
+    api.createUser(data)
+    .then(response => history.push('/login'))
     .catch(error => console.log(error))
+
+    // axios.post(endpoit, data)
+    // .then(response => {
+    //   history.push('/login')
+    // })
+    // .catch(error => console.log(error))
   }
 
   return (
@@ -101,8 +117,14 @@ const SignUp = props => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit((data) => submitData(data))}>
+        <form encType='multipart/form-data' className={classes.form} noValidate onSubmit={handleSubmit((data) => submitData(data))}>
           
+          <input
+          type="file"
+          accept=".png, .jpg, .jpeg"
+          name="photo"
+          onChange={handlePhoto} />
+
           <TextField
             variant="outlined"
             margin="normal"

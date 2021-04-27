@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import styles from './LandingPage.module.scss';
 import bgVideo from '../../videos/bg-video.mp4';
-import rockHand from '../Avatar/rockHand.svg';
+import plectrumEnter from '../../images/plectrumEnter.svg';
 
 export default function LandingPage() {
     return (
@@ -11,13 +11,10 @@ export default function LandingPage() {
                 <source src={bgVideo} type="video/mp4" />
             </video>
             <div className={styles.overlay}>
-                <Link className={styles.loginBtn} to="/login">
-                    <div className={styles.enterDiv}>
-                        <span className={styles.enter}>Login</span>
-                        <img className={styles.landingRockHand} src={rockHand} />
-                    </div>
-                    <Link className={styles.signup} to="signup">Not a user yet? Sign up here.</Link>
-                </Link>
+                {/* <Link className={styles.enter} to="/login">Login</Link> */}
+                <Link to="/login"><img src={plectrumEnter} /></Link>
+                <Link className={styles.signup} to="signup">Not a user yet? Sign up here.</Link>
+                
             </div>
         </div>
     )
