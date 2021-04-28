@@ -1,5 +1,5 @@
 {
-  "homepage": "http://staffanstromsholm.github.io/BandmateFinder-client",
+  "homepage": "http://StaffanStromsholm.github.io/BandmateFinder-client",
   "name": "client",
   "version": "0.1.0",
   "private": true,
@@ -23,8 +23,8 @@
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "build": "webpack --mode=production webpack.config.js",
-      "start": "webpack-dev-server --mode=development webpack.config.js",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject"
   },
