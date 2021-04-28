@@ -19,7 +19,7 @@ import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import { instruments, skillLevels } from '../../config';
+import { instruments, skillLevels, citiesInFinland } from '../../config';
 import * as api from '../../api/index.js';
 
 
@@ -50,6 +50,9 @@ const SignUp = props => {
   const { register, handleSubmit } = useForm();
   const [instrument, setInstrument] = useState('');
   const [skillLevel, setSKillLevel] = useState('');
+  const [city, setCity] = useState();
+  const [youtubeLink, setYoutubeLink] = useState();
+  const [contactEmail, setContactEmail] = useState();
   const [checkedState, setCheckedState] = useState({
     bands: false,
     jams: false,
@@ -84,21 +87,37 @@ const SignUp = props => {
     console.log(e.target.files[0])
   }
 
+  const handleCityChange = (event) => {
+    setCity(event.target.value);
+  }
+
+  const handleYoutubeLink = (e) => {
+    setYoutubeLink(e.target.value);
+  }
+
+  const handleContactEmail = (e) => {
+    setContactEmail(e.target.value);
+  }
+
   const submitData = (data) => {
     // e.preventDefault();
     // const formData = new FormData();
     // formData.append('photo', photo);
-    
-    const lookingFor = { bands, jams, studioWork, songWriting}
+
+    const lookingFor = { bands, jams, studioWork, songWriting }
+    data.city = city;
     data.primaryInstrument = instrument;
     data.skillLevel = skillLevel;
     data.lookingFor = lookingFor;
     data.freeText = freeText;
+    data.email = contactEmail;
+    data.mediaLink = youtubeLink;
+    
     // data.photo = photo;
 
     api.createUser(data)
-    .then(response => history.push('/login'))
-    .catch(error => console.log(error))
+      .then(response => history.push('/login'))
+      .catch(error => console.log(error))
 
     // axios.post(endpoit, data)
     // .then(response => {
@@ -118,12 +137,12 @@ const SignUp = props => {
           Sign up
         </Typography>
         <form encType='multipart/form-data' className={classes.form} noValidate onSubmit={handleSubmit((data) => submitData(data))}>
-          
+
           <input
-          type="file"
-          accept=".png, .jpg, .jpeg"
-          name="photo"
-          onChange={handlePhoto} />
+            type="file"
+            accept=".png, .jpg, .jpeg"
+            name="photo"
+            onChange={handlePhoto} />
 
           <TextField
             variant="outlined"
@@ -167,91 +186,123 @@ const SignUp = props => {
             inputRef={register}
             required
             fullWidth
+            id="city"
+            select
+            //set value to user.skillLevel when rendered first time
+            value={city}
             name="city"
             label="City"
             type="text"
-            id="city"
-            autoComplete="city"
-          />
+            onChange={handleCityChange}
+          >
+            {citiesInFinland.map((city, index) => (
+              <MenuItem key={index} value={city}>
+                {city}
+              </MenuItem>
+            ))}
+          </TextField>
           <TextField
-          variant="outlined"
-          margin="normal"
-          inputRef={register}
-          required
-          fullWidth
-          id="mainInstrument"
-          select
-          value={instrument}
-          name= "instrument"
-          label="Instrument"
-          type="text"
-          onChange={handleInstrumentChange}
-          helperText="Please select your main instrument"
-        >
-          {Object.keys(instruments).map((key, index) => (
-            <MenuItem key={index} value={key}>
-              {key}
-            </MenuItem>
-          ))}
-        </TextField>
+            variant="outlined"
+            margin="normal"
+            inputRef={register}
+            required
+            fullWidth
+            id="mainInstrument"
+            select
+            value={instrument}
+            name="instrument"
+            label="Instrument"
+            type="text"
+            onChange={handleInstrumentChange}
+            helperText="Please select your main instrument"
+          >
+            {Object.keys(instruments).map((key, index) => (
+              <MenuItem key={index} value={key}>
+                {key}
+              </MenuItem>
+            ))}
+          </TextField>
 
-        <TextField
-          variant="outlined"
-          margin="normal"
-          inputRef={register}
-          required
-          fullWidth
-          id="skillLevel"
-          select
-          value={skillLevel}
-          name= "skillLevel"
-          label="Skill Level"
-          type="text"
-          onChange={handleSkillLevelChange}
-        >
-          {skillLevels.map((skillLevel, index) => (
-            <MenuItem key={index} value={skillLevel}>
-              {skillLevel}
-            </MenuItem>
-          ))}
-        </TextField>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            inputRef={register}
+            required
+            fullWidth
+            id="skillLevel"
+            select
+            value={skillLevel}
+            name="skillLevel"
+            label="Skill Level"
+            type="text"
+            onChange={handleSkillLevelChange}
+          >
+            {skillLevels.map((skillLevel, index) => (
+              <MenuItem key={index} value={skillLevel}>
+                {skillLevel}
+              </MenuItem>
+            ))}
+          </TextField>
 
-        <FormControl component="fieldset" className={classes.formControl}>
-        <FormLabel component="legend">I'm looking for</FormLabel>
-        <FormGroup>
-            <FormControlLabel
-            control={<Checkbox checked={bands} onChange={handleLookingForChange} name='bands' />}
-            label='Bands'
-            />
-             <FormControlLabel
-            control={<Checkbox checked={jams} onChange={handleLookingForChange} name='jams' />}
-            label='Jams'
-            />
-             <FormControlLabel
-            control={<Checkbox checked={songWriting} onChange={handleLookingForChange} name='songWriting' />}
-            label='Song writing'
-            />
-             <FormControlLabel
-            control={<Checkbox checked={studioWork} onChange={handleLookingForChange} name='studioWork' />}
-            label='Studio work'
-            />
-        </FormGroup>
-      </FormControl>
+          <FormControl component="fieldset" className={classes.formControl}>
+            <FormLabel component="legend">I'm looking for</FormLabel>
+            <FormGroup>
+              <FormControlLabel
+                control={<Checkbox checked={bands} onChange={handleLookingForChange} name='bands' />}
+                label='Bands'
+              />
+              <FormControlLabel
+                control={<Checkbox checked={jams} onChange={handleLookingForChange} name='jams' />}
+                label='Jams'
+              />
+              <FormControlLabel
+                control={<Checkbox checked={songWriting} onChange={handleLookingForChange} name='songWriting' />}
+                label='Song writing'
+              />
+              <FormControlLabel
+                control={<Checkbox checked={studioWork} onChange={handleLookingForChange} name='studioWork' />}
+                label='Studio work'
+              />
+            </FormGroup>
+          </FormControl>
 
-      <TextField  variant=''
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  placeholder='Write something about yourself'
-                  multiline
-                  rows={5}
-                  rowsMax={10}
-                  onChange={handleBioChange}
-                  inputRef={register}
-      />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            inputRef={register}
+            fullWidth
+            name="youtubeLink"
+            label="Youtube link of your playing"
+            type="youtubeLink"
+            id="youtubeLink"
+            onChange={handleYoutubeLink}
+          />
 
+          <TextField
+            variant="outlined"
+            margin="normal"
+            inputRef={register}
+            required
+            fullWidth
+            name="contactEmail"
+            label="Email for contacting you"
+            type="contactEmail"
+            id="contactEmail"
+            onChange={handleContactEmail}
+          />
 
+          <TextField variant=''
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            placeholder='Write something about yourself'
+            multiline
+            rows={5}
+            rowsMax={10}
+            onChange={handleBioChange}
+            inputRef={register}
+          />
 
           <Button
             type="submit"
@@ -263,7 +314,7 @@ const SignUp = props => {
             Sign up
           </Button>
           <Grid container>
-            
+
             <Grid item>
               <Link href="/login" variant="body2">
                 {"Already have an account? Login"}

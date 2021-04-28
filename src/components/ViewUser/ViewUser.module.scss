@@ -4,6 +4,14 @@
     padding-top: 2rem;
     color: white;
 
+    p{
+        margin-bottom: 1rem;
+    }
+
+    .bio {
+        font-size: .8rem;
+    }
+
     .instrumentWrapper {
         margin: 0 auto;
         width: 100px;
@@ -11,7 +19,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: white;
+        background-color: rgb(255, 255, 255);
         border-radius: 50%;
 
         .instrument {
@@ -20,16 +28,28 @@
     }
 
     .infoWrapper {
-        border: 2px solid white;
+        border: 1px solid white;
         padding: 3rem;
         border-radius: 20px;
         margin-top: -3rem;
+        background-color: rgba(255, 255, 255, 0.068);
+
         h1 {
             margin-top: 1rem;
         }
         h3 {
             margin-top: 1rem;
+        }
+    }
+}
 
+
+@media (min-width: 700px) {
+    .ViewUser {
+        width: 90%;
+
+        .bio {
+            font-size: 1rem;
         }
     }
 }

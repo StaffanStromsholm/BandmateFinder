@@ -42,12 +42,13 @@ const ViewUser = () => {
                 <div className={styles.instrumentWrapper}><img className={styles.instrument} src={instruments[user.primaryInstrument]} /></div>
                 <div className={styles.infoWrapper}>
                 <h1>{user.username} </h1> 
-
-                <h3>{user.primaryInstrument}</h3>
-                <h3>{user.city}</h3>
-                <h3>Looking for: {user.lookingFor.bands && 'bands'}{user.lookingFor.jams && ', jams'}{user.lookingFor.studioWork && ', studio work'}{user.lookingFor.songWriting && ', song writing'}</h3>
-                <h3>{user.skillLevel}</h3>
-                <h3>{user.freeText}</h3>
+                <p>{user.email}</p>
+                <p><i class="fas fa-music"></i> {user.primaryInstrument}</p>
+                <p><i class="fas fa-map-marker"></i> {user.city}</p>
+                <p><i class="fas fa-binoculars"></i> {user.lookingFor.bands && 'bands'}{user.lookingFor.jams && ', jams'}{user.lookingFor.studioWork && ', studio work'}{user.lookingFor.songWriting && ', song writing'}</p>
+                <p><i class="fas fa-star"></i> {user.skillLevel}</p>
+                <p><i class="fas fa-user"></i></p>
+                <p className={styles.bio}>{user.freeText}</p>
                 </div>
             </div>
     );

@@ -13,6 +13,7 @@ import contrabass from './instrumentIcons/contrabass.png';
 import flute from './instrumentIcons/flute.png';
 import cello from './instrumentIcons/cello.png';
 import accordion from './instrumentIcons/accordion.png';
+import singer from './instrumentIcons/singer.svg'
 
 const instruments = {
   'Electric-guitar': electricGuitar,
@@ -29,7 +30,8 @@ const instruments = {
   'Contrabass': contrabass,
   'Flute': flute,
   'Cello': cello,
-  'Accordion': accordion
+  'Accordion': accordion,
+  'Singer': singer
 };
 
 const skillLevels = ['Beginner', 'Intermediate', 'Advance', 'Professional']
@@ -52,7 +54,7 @@ const citiesInFinland = ['Äänekoski',
   'Etseri',
   'Forssa',
   'Fredrikshamn',
-  'Grankulla ',
+  'Grankulla',
   'Haapajärvi',
   'Haapavesi',
   'Hämeenlinna',

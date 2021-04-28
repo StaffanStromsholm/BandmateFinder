@@ -55,7 +55,6 @@ const Map = ({ users }) => {
     
 
     <div className={styles.mapAndSearch}>
-    {!clickedUser && <h2>Select a user from the map</h2>}
 
     <div className={styles.userInfoWrapper}>
     <div>
