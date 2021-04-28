@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import styles from './Map.module.scss';
-import FilterByInstrument from './FilterByInstrument';
+import FilterByInstrument from './FilterByInstrument.js';
 import { makeStyles } from '@material-ui/core/styles';
 import { instruments } from '../../config';
 
