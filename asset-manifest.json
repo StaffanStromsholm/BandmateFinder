@@ -1,0 +1,36 @@
+{
+  "files": {
+    "main.css": "/BandmateFinder-client/static/css/main.d20a4f63.chunk.css",
+    "main.js": "/BandmateFinder-client/static/js/main.c06cdd8f.chunk.js",
+    "main.js.map": "/BandmateFinder-client/static/js/main.c06cdd8f.chunk.js.map",
+    "runtime-main.js": "/BandmateFinder-client/static/js/runtime-main.b726ba7f.js",
+    "runtime-main.js.map": "/BandmateFinder-client/static/js/runtime-main.b726ba7f.js.map",
+    "static/js/2.08eec2b2.chunk.js": "/BandmateFinder-client/static/js/2.08eec2b2.chunk.js",
+    "static/js/2.08eec2b2.chunk.js.map": "/BandmateFinder-client/static/js/2.08eec2b2.chunk.js.map",
+    "index.html": "/BandmateFinder-client/index.html",
+    "static/css/main.d20a4f63.chunk.css.map": "/BandmateFinder-client/static/css/main.d20a4f63.chunk.css.map",
+    "static/js/2.08eec2b2.chunk.js.LICENSE.txt": "/BandmateFinder-client/static/js/2.08eec2b2.chunk.js.LICENSE.txt",
+    "static/media/accordion.72f49547.png": "/BandmateFinder-client/static/media/accordion.72f49547.png",
+    "static/media/acoustic-guitar.e093c483.png": "/BandmateFinder-client/static/media/acoustic-guitar.e093c483.png",
+    "static/media/bass-guitar.2dd0d591.png": "/BandmateFinder-client/static/media/bass-guitar.2dd0d591.png",
+    "static/media/bg-video.bb2a6c75.mp4": "/BandmateFinder-client/static/media/bg-video.bb2a6c75.mp4",
+    "static/media/cello.fe056a1b.png": "/BandmateFinder-client/static/media/cello.fe056a1b.png",
+    "static/media/contrabass.7e0fd9aa.png": "/BandmateFinder-client/static/media/contrabass.7e0fd9aa.png",
+    "static/media/drumset.30c6815c.png": "/BandmateFinder-client/static/media/drumset.30c6815c.png",
+    "static/media/electric-guitar.e25fe96b.png": "/BandmateFinder-client/static/media/electric-guitar.e25fe96b.png",
+    "static/media/piano.ac0d6201.png": "/BandmateFinder-client/static/media/piano.ac0d6201.png",
+    "static/media/plectrumEnter.3e17d4f9.svg": "/BandmateFinder-client/static/media/plectrumEnter.3e17d4f9.svg",
+    "static/media/rockHand.e6d78669.svg": "/BandmateFinder-client/static/media/rockHand.e6d78669.svg",
+    "static/media/saxophone.7a8ae0df.png": "/BandmateFinder-client/static/media/saxophone.7a8ae0df.png",
+    "static/media/singer.6e8f9ada.svg": "/BandmateFinder-client/static/media/singer.6e8f9ada.svg",
+    "static/media/trombone.7ed438fb.png": "/BandmateFinder-client/static/media/trombone.7ed438fb.png",
+    "static/media/trumpet.e1e28370.png": "/BandmateFinder-client/static/media/trumpet.e1e28370.png",
+    "static/media/violin.47923820.png": "/BandmateFinder-client/static/media/violin.47923820.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b726ba7f.js",
+    "static/js/2.08eec2b2.chunk.js",
+    "static/css/main.d20a4f63.chunk.css",
+    "static/js/main.c06cdd8f.chunk.js"
+  ]
+}
