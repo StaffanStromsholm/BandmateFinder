@@ -23,9 +23,9 @@
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "start": "react-scripts start",
+    "build": "webpack --mode=production webpack.config.js",
+      "start": "webpack-dev-server --mode=development webpack.config.js",
     "test": "jest",
-    "build": "webpack src/app.js -o public/bundle.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
