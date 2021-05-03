@@ -114,7 +114,7 @@ const Login = ({setToken, setUser}) => {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="/bmf/signup" variant="body2">
+              <Link href="/BandmateFinder-client/signup" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

@@ -22,15 +22,15 @@ function App() {
 
   if (!token) return (
     <Switch>
-      <Route path="/bmf" exact>
+      <Route path="/BandmateFinder-client" exact>
         <Header setUser={setUser} setToken={setToken}/>
         <LandingPage />
       </Route>
-      <Route path="/bmf/login" exact>
+      <Route path="/BandmateFinder-client/login" exact>
         <Header setUser={setUser} setToken={setToken}/>
         <Login setUser={setUser} setToken={setToken} />
       </Route>
-      <Route path="/bmf/signup" exact>
+      <Route path="/BandmateFinder-client/signup" exact>
         <Header setUser={setUser} setToken={setToken} />
         <SignUp setToken={setToken} />
       </Route>
@@ -43,32 +43,32 @@ function App() {
 
       <Switch>
 
-        <Route path="/bmf/login" exact>
+        <Route path="/BandmateFinder-client/login" exact>
           <Header user={user} setToken={setToken} />
           <Login setUser={setUser} setToken={setToken} />
         </Route>
 
-        <Route path="/bmf/signup" exact>
+        <Route path="/BandmateFinder-client/signup" exact>
           <Header user={user} setToken={setToken} />
           <SignUp setToken={setToken} />
         </Route>
 
-        <Route exact path="/bmf">
+        <Route exact path="/BandmateFinder-client">
           <Header user={user} setToken={setToken} />
           <LandingPage />
         </Route>
 
-        <Route exact path="/bmf/edit-profile">
+        <Route exact path="/BandmateFinder-client/edit-profile">
           <Header user={user} setToken={setToken} />
           <EditProfile />
         </Route>
 
-        <Route path="/bmf/search" exact>
+        <Route path="/BandmateFinder-client/search" exact>
           <Header user={user} setToken={setToken} />
           <SearchUsers />
         </Route>
 
-        <Route path="/bmf/users/:username">
+        <Route path="/BandmateFinder-client/users/:username">
           <Header user={user} setToken={setToken} />
           <ViewUser />
         </Route>

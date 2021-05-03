@@ -12,8 +12,8 @@ export default function LandingPage() {
             </video>
             <div className={styles.overlay}>
                 {/* <Link className={styles.enter} to="/login">Login</Link> */}
-                <Link to="/bmf/login"><img src={plectrumEnter} /></Link>
-                <Link className={styles.signup} to="signup">Not a user yet? Sign up here.</Link>
+                <Link to="/BandmateFinder-client/login"><img src={plectrumEnter} /></Link>
+                <Link className={styles.signup} to="/BandmateFinder-client/signup">Not a user yet? Sign up here.</Link>
                 
             </div>
         </div>
