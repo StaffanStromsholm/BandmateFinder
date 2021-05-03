@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/BandmateFinder-client/static/css/main.ff9409ab.chunk.css",
-    "main.js": "/BandmateFinder-client/static/js/main.b7170798.chunk.js",
-    "main.js.map": "/BandmateFinder-client/static/js/main.b7170798.chunk.js.map",
+    "main.js": "/BandmateFinder-client/static/js/main.d0dd5846.chunk.js",
+    "main.js.map": "/BandmateFinder-client/static/js/main.d0dd5846.chunk.js.map",
     "runtime-main.js": "/BandmateFinder-client/static/js/runtime-main.b726ba7f.js",
     "runtime-main.js.map": "/BandmateFinder-client/static/js/runtime-main.b726ba7f.js.map",
-    "static/js/2.f4339fb9.chunk.js": "/BandmateFinder-client/static/js/2.f4339fb9.chunk.js",
-    "static/js/2.f4339fb9.chunk.js.map": "/BandmateFinder-client/static/js/2.f4339fb9.chunk.js.map",
+    "static/js/2.cd390d2a.chunk.js": "/BandmateFinder-client/static/js/2.cd390d2a.chunk.js",
+    "static/js/2.cd390d2a.chunk.js.map": "/BandmateFinder-client/static/js/2.cd390d2a.chunk.js.map",
     "index.html": "/BandmateFinder-client/index.html",
     "static/css/main.ff9409ab.chunk.css.map": "/BandmateFinder-client/static/css/main.ff9409ab.chunk.css.map",
-    "static/js/2.f4339fb9.chunk.js.LICENSE.txt": "/BandmateFinder-client/static/js/2.f4339fb9.chunk.js.LICENSE.txt",
+    "static/js/2.cd390d2a.chunk.js.LICENSE.txt": "/BandmateFinder-client/static/js/2.cd390d2a.chunk.js.LICENSE.txt",
     "static/media/accordion.72f49547.png": "/BandmateFinder-client/static/media/accordion.72f49547.png",
     "static/media/acoustic-guitar.e093c483.png": "/BandmateFinder-client/static/media/acoustic-guitar.e093c483.png",
     "static/media/bass-guitar.2dd0d591.png": "/BandmateFinder-client/static/media/bass-guitar.2dd0d591.png",
@@ -29,8 +29,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.b726ba7f.js",
-    "static/js/2.f4339fb9.chunk.js",
+    "static/js/2.cd390d2a.chunk.js",
     "static/css/main.ff9409ab.chunk.css",
-    "static/js/main.b7170798.chunk.js"
+    "static/js/main.d0dd5846.chunk.js"
   ]
 }
