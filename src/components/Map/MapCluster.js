@@ -62,7 +62,7 @@ const Map = ({ users }) => {
     </div>
 
       {showUserList && <div className={styles.userList}>
-                    {filteredUsers.sort().map(user =><div className={styles.userList}><img className={styles.smallImg} src={instruments[user.primaryInstrument]} /><Link to={`/users/${user.username}`}>{user.username} - {user.city}</Link></div> )}
+                    {filteredUsers.sort().map(user =><div className={styles.userList}><img className={styles.smallImg} src={instruments[user.primaryInstrument]} /><Link to={`/BandmateFinder-client/users/${user.username}`}>{user.username} - {user.city}</Link></div> )}
         </div>}
 
       {clickedUser && showUserCard &&
@@ -76,7 +76,7 @@ const Map = ({ users }) => {
             <h3>Looking for: {clickedUser.lookingFor.bands && 'bands'}{clickedUser.lookingFor.jams && ', jams'}{clickedUser.lookingFor.studioWork && ', studio work'}{clickedUser.lookingFor.songWriting && ', song writing'}</h3>
             <h3>{clickedUser.skillLevel}</h3>
             <h3>{clickedUser.freeText}</h3>
-            <Link to={`/bmf/users/${clickedUser.username}`}>Read More</Link>
+            <Link to={`/BandmateFinder-client/users/${clickedUser.username}`}>Read More</Link>
           </div>
         </div>
       }
