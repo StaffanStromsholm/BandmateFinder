@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
 import './styles.css';
-import Avatar from '../Avatar/Avatar.js';
-import Grid from '@material-ui/core/Grid';
 import MapCluster from '../Map/MapCluster.js';
 import * as api from '../../api/index.js';
 
