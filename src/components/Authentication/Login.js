@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 //put this in useEffect?
 async function loginUser(credentials) {
-  return fetch('http://localhost:5000/login', {
+  return fetch('https://bmf-backend.herokuapp.com/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -50,7 +50,7 @@ async function loginUser(credentials) {
  }
 
 const Login = ({setToken, setUser}) => {
-  const endpoit = 'http://localhost:5000/login'
+  const endpoit = 'https://bmf-backend.herokuapp.com/login'
   const classes = useStyles();
   const { register, handleSubmit } = useForm();
   const [username, setUsername] = useState();
