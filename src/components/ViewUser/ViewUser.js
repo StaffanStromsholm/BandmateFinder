@@ -22,15 +22,13 @@ const ViewUser = () => {
 
     const classes = useStyles();
 
-    // const endpoint = `http://localhost:5000/getuser/${username}`;
-
     useEffect(async () => {
         setIsLoading(true)
         api.fetchUser(username)
-        .then(response => {
-            setUser(response.data)
-            setIsLoading(false);
-        });
+            .then(response => {
+                setUser(response.data)
+                setIsLoading(false);
+            });
     }, []);
 
     if (isLoading || !user.lookingFor) {
@@ -38,10 +36,10 @@ const ViewUser = () => {
     }
 
     return (
-            <div className={styles.ViewUser}>
-                <div className={styles.instrumentWrapper}><img className={styles.instrument} src={instruments[user.primaryInstrument]} /></div>
-                <div className={styles.infoWrapper}>
-                <h1>{user.username} </h1> 
+        <div className={styles.ViewUser}>
+            <div className={styles.instrumentWrapper}><img className={styles.instrument} src={instruments[user.primaryInstrument]} /></div>
+            <div className={styles.infoWrapper}>
+                <h1>{user.username} </h1>
                 <p>{user.email}</p>
                 <p><i class="fas fa-music"></i> {user.primaryInstrument}</p>
                 <p><i class="fas fa-map-marker"></i> {user.city}</p>
@@ -49,8 +47,8 @@ const ViewUser = () => {
                 <p><i class="fas fa-star"></i> {user.skillLevel}</p>
                 <p><i class="fas fa-user"></i></p>
                 <p className={styles.bio}>{user.freeText}</p>
-                </div>
             </div>
+        </div>
     );
 }
 

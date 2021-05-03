@@ -54,21 +54,17 @@ const Header = ({setToken, loggedInUser}) => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     setToken('');
-    history.push('/login');
+    history.push('/bmf/login');
   }
 
   return (
     <div className={classes.root}>
       <FormGroup>
-        {/* <FormControlLabel
-          control={<Switch checked={auth} onChange={handleChange} aria-label="login switch" />}
-          label={auth ? 'Logout' : 'Login'}
-        /> */}
       </FormGroup>
       <AppBar position="static" style={{backgroundColor: "#cc0066"}}>
         <Toolbar>
         <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <img onClick={() => handleMenuClick('/')} width="70px" src={plectrum}></img>
+            <img onClick={() => handleMenuClick('/bmf')} width="70px" src={plectrum}></img>
         </IconButton>
         <Typography variant="h6" className={classes.title}>
         </Typography>
@@ -98,8 +94,8 @@ const Header = ({setToken, loggedInUser}) => {
                 open={open}
                 onClose={() => setAnchorEl(null)}
               >
-                <MenuItem onClick={() => handleMenuClick('/edit-profile')}>Edit profile</MenuItem>
-                <MenuItem onClick={() => handleMenuClick('/search')}>Search users</MenuItem>
+                <MenuItem onClick={() => handleMenuClick('/bmf/edit-profile')}>Edit profile</MenuItem>
+                <MenuItem onClick={() => handleMenuClick('/bmf/search')}>Search users</MenuItem>
                 <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
               </Menu>
             </div>

@@ -22,19 +22,19 @@ function App() {
 
   if (!token) return (
     <Switch>
-      <Route path="/" exact>
+      <Route path="/bmf" exact>
         <Header setUser={setUser} setToken={setToken}/>
         <LandingPage />
       </Route>
-      <Route path="/login" exact>
+      <Route path="/bmf/login" exact>
         <Header setUser={setUser} setToken={setToken}/>
         <Login setUser={setUser} setToken={setToken} />
       </Route>
-      <Route path="/signup" exact>
+      <Route path="/bmf/signup" exact>
         <Header setUser={setUser} setToken={setToken} />
         <SignUp setToken={setToken} />
       </Route>
-      <Redirect to='/login' />
+      <Redirect to='/bmf/login' />
     </Switch>
   )
 
@@ -43,32 +43,32 @@ function App() {
 
       <Switch>
 
-        <Route path="/login" exact>
+        <Route path="/bmf/login" exact>
           <Header user={user} setToken={setToken} />
           <Login setUser={setUser} setToken={setToken} />
         </Route>
 
-        <Route path="/signup" exact>
+        <Route path="/bmf/signup" exact>
           <Header user={user} setToken={setToken} />
           <SignUp setToken={setToken} />
         </Route>
 
-        <Route exact path="/">
+        <Route exact path="/bmf">
           <Header user={user} setToken={setToken} />
           <LandingPage />
         </Route>
 
-        <Route exact path="/edit-profile">
+        <Route exact path="/bmf/edit-profile">
           <Header user={user} setToken={setToken} />
           <EditProfile />
         </Route>
 
-        <Route path="/search" exact>
+        <Route path="/bmf/search" exact>
           <Header user={user} setToken={setToken} />
           <SearchUsers />
         </Route>
 
-        <Route path="/users/:username">
+        <Route path="/bmf/users/:username">
           <Header user={user} setToken={setToken} />
           <ViewUser />
         </Route>

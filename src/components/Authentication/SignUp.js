@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignUp = props => {
-  const endpoit = 'http://localhost:5000/register'
+  const endpoit = 'https://bmf-backend.herokuapp.com/register'
   const classes = useStyles();
   const { history } = props;
   const { register, handleSubmit } = useForm();
@@ -100,9 +100,6 @@ const SignUp = props => {
   }
 
   const submitData = (data) => {
-    // e.preventDefault();
-    // const formData = new FormData();
-    // formData.append('photo', photo);
 
     const lookingFor = { bands, jams, studioWork, songWriting }
     data.city = city;
@@ -116,14 +113,8 @@ const SignUp = props => {
     // data.photo = photo;
 
     api.createUser(data)
-      .then(response => history.push('/login'))
+      .then(response => history.push('/bmf/login'))
       .catch(error => console.log(error))
-
-    // axios.post(endpoit, data)
-    // .then(response => {
-    //   history.push('/login')
-    // })
-    // .catch(error => console.log(error))
   }
 
   return (
@@ -188,7 +179,6 @@ const SignUp = props => {
             fullWidth
             id="city"
             select
-            //set value to user.skillLevel when rendered first time
             value={city}
             name="city"
             label="City"

@@ -9,8 +9,6 @@ import axios from 'axios';
 
 const pinImg = 'https://www.flaticon.com/svg/static/icons/svg/484/484167.svg';
 
-const positionStackAPIKey = 'be2bf278ff4827f8917f1e0ac5f177f9';
-
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
@@ -78,7 +76,7 @@ const Map = ({ users }) => {
             <h3>Looking for: {clickedUser.lookingFor.bands && 'bands'}{clickedUser.lookingFor.jams && ', jams'}{clickedUser.lookingFor.studioWork && ', studio work'}{clickedUser.lookingFor.songWriting && ', song writing'}</h3>
             <h3>{clickedUser.skillLevel}</h3>
             <h3>{clickedUser.freeText}</h3>
-            <Link to={`/users/${clickedUser.username}`}>Read More</Link>
+            <Link to={`/bmf/users/${clickedUser.username}`}>Read More</Link>
           </div>
         </div>
       }
@@ -97,8 +95,6 @@ export default withRouter(Map);
 
 async function placeUsersOnMap(filteredUsers, addInfoBubble, map) {
   for (const user of filteredUsers) {
-    // const response = await axios.get(`http://api.positionstack.com/v1/forward?access_key=${positionStackAPIKey}&query=${user.city}, ${user.postalCode}`)
-    // const coords = { lat: response.data.data[0].latitude, lng: response.data.data[0].longitude }
     const coords = { lat: user.geoLocation.latitude, lng: user.geoLocation.longitude }
     addInfoBubble(map, coords, user);
   }

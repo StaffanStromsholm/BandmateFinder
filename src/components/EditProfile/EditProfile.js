@@ -93,7 +93,7 @@ const EditProfile = props => {
         api.updateUser(user._id, data)
         .then(response =>  {
             console.log(response);
-            history.push('/search');
+            history.push('/bmf/search');
         });
     }
 
@@ -135,30 +135,6 @@ const EditProfile = props => {
                             autoFocus
                             defaultValue={user.username}
                         />
-                        {/* <TextField
-                            variant="outlined"
-                            margin="normal"
-                            inputRef={register}
-                            required
-                            fullWidth
-                            name="password"
-                            label="New Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                        />
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            inputRef={register}
-                            required
-                            fullWidth
-                            name="confirmPassword"
-                            label="Confirm Password"
-                            type="password"
-                            id="confirmPassword"
-                            autoComplete="current-password"
-                        /> */}
                         <TextField
                             variant="outlined"
                             margin="normal"
