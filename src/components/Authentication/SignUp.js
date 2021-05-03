@@ -113,7 +113,7 @@ const SignUp = props => {
     // data.photo = photo;
 
     api.createUser(data)
-      .then(response => history.push('/bmf/login'))
+      .then(response => history.push('/BandmateFinder-client/login'))
       .catch(error => console.log(error))
   }
 
@@ -306,7 +306,7 @@ const SignUp = props => {
           <Grid container>
 
             <Grid item>
-              <Link href="/login" variant="body2">
+              <Link href="/BandmateFinder-client/login" variant="body2">
                 {"Already have an account? Login"}
               </Link>
             </Grid>

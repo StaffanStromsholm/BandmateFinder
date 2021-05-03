@@ -93,7 +93,7 @@ const EditProfile = props => {
         api.updateUser(user._id, data)
         .then(response =>  {
             console.log(response);
-            history.push('/bmf/search');
+            history.push('/BandmateFinder-client/search');
         });
     }
 

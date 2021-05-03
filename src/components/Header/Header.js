@@ -54,7 +54,7 @@ const Header = ({setToken, loggedInUser}) => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     setToken('');
-    history.push('/bmf/login');
+    history.push('/BandmateFinder-client/login');
   }
 
   return (
@@ -64,7 +64,7 @@ const Header = ({setToken, loggedInUser}) => {
       <AppBar position="static" style={{backgroundColor: "#cc0066"}}>
         <Toolbar>
         <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <img onClick={() => handleMenuClick('/bmf')} width="70px" src={plectrum}></img>
+            <img onClick={() => handleMenuClick('/BandmateFinder-client')} width="70px" src={plectrum}></img>
         </IconButton>
         <Typography variant="h6" className={classes.title}>
         </Typography>
@@ -94,8 +94,8 @@ const Header = ({setToken, loggedInUser}) => {
                 open={open}
                 onClose={() => setAnchorEl(null)}
               >
-                <MenuItem onClick={() => handleMenuClick('/bmf/edit-profile')}>Edit profile</MenuItem>
-                <MenuItem onClick={() => handleMenuClick('/bmf/search')}>Search users</MenuItem>
+                <MenuItem onClick={() => handleMenuClick('/BandmateFinder-client/edit-profile')}>Edit profile</MenuItem>
+                <MenuItem onClick={() => handleMenuClick('/BandmateFinder-client/search')}>Search users</MenuItem>
                 <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
               </Menu>
             </div>

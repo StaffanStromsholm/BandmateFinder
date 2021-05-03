@@ -63,7 +63,7 @@ const Login = ({setToken, setUser}) => {
     console.log(token);
     setToken(token);
     setUser(token.user)
-    history.push('/bmf/search');
+    history.push('/BandmateFinder-client/search');
   }
 
   return (
