@@ -68,7 +68,7 @@ const Map = ({ users }) => {
         </div>}
 
       {clickedUser && showUserCard &&
-        <div className={styles.ViewUser}>
+        <div key={Math.random()} className={styles.ViewUser}>
           <div className={styles.instrumentWrapper}><img className={styles.instrument} src={instruments[clickedUser.primaryInstrument]} /></div>
           <div className={styles.infoWrapper}>
             <h1>{clickedUser.username} </h1>

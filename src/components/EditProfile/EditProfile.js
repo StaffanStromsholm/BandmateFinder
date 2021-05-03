@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 import { withRouter, useHistory } from 'react-router-dom';
 import { instruments, skillLevels, citiesInFinland } from '../../config';
 import styles from './EditProfile.module.scss';
@@ -45,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
 
 const EditProfile = props => {
     const classes = useStyles();
-    // const { history } = props;
     const history = useHistory();
     const { register, handleSubmit } = useForm();
     const [instrument, setInstrument] = useState();
@@ -99,7 +91,10 @@ const EditProfile = props => {
         console.log(data);
 
         api.updateUser(user._id, data)
-        .then(response => console.log(response));
+        .then(response =>  {
+            console.log(response);
+            history.push('/search');
+        });
     }
 
     useEffect(() => {
