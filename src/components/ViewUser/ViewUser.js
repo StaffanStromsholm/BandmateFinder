@@ -31,8 +31,9 @@ const ViewUser = () => {
             });
     }, []);
 
+    //make sure user.lookingFor is not undefined before rendering
     if (isLoading || !user.lookingFor) {
-        return <h1>Loading...</h1>
+        return <h1 className={styles.ViewUser}>Loading...</h1>
     }
 
     return (
@@ -43,7 +44,7 @@ const ViewUser = () => {
                 <p>{user.email}</p>
                 <p><i class="fas fa-music"></i> {user.primaryInstrument}</p>
                 <p><i class="fas fa-map-marker"></i> {user.city}</p>
-                <p><i class="fas fa-binoculars"></i> {user.lookingFor.bands && 'bands'}{user.lookingFor.jams && ', jams'}{user.lookingFor.studioWork && ', studio work'}{user.lookingFor.songWriting && ', song writing'}</p>
+                <p><i class="fas fa-binoculars"></i> {user.lookingFor.bands && ' bands '}{user.lookingFor.jams && ' jams '}{user.lookingFor.studioWork && ' studio work '}{user.lookingFor.songWriting && ' songwriting'}</p>
                 <p><i class="fas fa-star"></i> {user.skillLevel}</p>
                 <p><i class="fas fa-user"></i></p>
                 <p className={styles.bio}>{user.freeText}</p>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styles from './LandingPage.module.scss';
 import bgVideo from '../../videos/bg-video.mp4';
 import plectrumEnter from '../../images/plectrumEnter.svg';
+import rockhand from '../../images/rockHand.svg'
 
 export default function LandingPage() {
     return (
@@ -12,9 +13,9 @@ export default function LandingPage() {
             </video>
             <div className={styles.overlay}>
                 {/* <Link className={styles.enter} to="/login">Login</Link> */}
-                <Link to="/BandmateFinder-client/login"><img src={plectrumEnter} /></Link>
+                <Link className={styles.plectrum} to="/BandmateFinder-client/login"><img src={plectrumEnter} /></Link>
                 <Link className={styles.signup} to="/BandmateFinder-client/signup">Not a user yet? Sign up here.</Link>
-                
+                <div className={styles.rockhand}><img src={rockhand}/></div>
             </div>
         </div>
     )

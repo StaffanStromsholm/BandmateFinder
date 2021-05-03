@@ -8,7 +8,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -17,7 +16,6 @@ import FormGroup from '@material-ui/core/FormGroup';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import { instruments, skillLevels, citiesInFinland } from '../../config';
 import * as api from '../../api/index.js';
@@ -128,12 +126,12 @@ const SignUp = props => {
           Sign up
         </Typography>
         <form encType='multipart/form-data' className={classes.form} noValidate onSubmit={handleSubmit((data) => submitData(data))}>
-
+{/* 
           <input
             type="file"
             accept=".png, .jpg, .jpeg"
             name="photo"
-            onChange={handlePhoto} />
+            onChange={handlePhoto} /> */}
 
           <TextField
             variant="outlined"
@@ -177,6 +175,18 @@ const SignUp = props => {
             inputRef={register}
             required
             fullWidth
+            name="contactEmail"
+            label="Email for contacting you"
+            type="contactEmail"
+            id="contactEmail"
+            onChange={handleContactEmail}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            inputRef={register}
+            required
+            fullWidth
             id="city"
             select
             value={city}
@@ -191,6 +201,18 @@ const SignUp = props => {
               </MenuItem>
             ))}
           </TextField>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            inputRef={register}
+            required
+            fullWidth
+            name="postalCode"
+            label="Postal Code"
+            type="text"
+            id="postalCode"
+            helperText="Used for more precise geolocation"
+          />
           <TextField
             variant="outlined"
             margin="normal"
@@ -255,31 +277,6 @@ const SignUp = props => {
               />
             </FormGroup>
           </FormControl>
-
-          <TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={register}
-            fullWidth
-            name="youtubeLink"
-            label="Youtube link of your playing"
-            type="youtubeLink"
-            id="youtubeLink"
-            onChange={handleYoutubeLink}
-          />
-
-          <TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={register}
-            required
-            fullWidth
-            name="contactEmail"
-            label="Email for contacting you"
-            type="contactEmail"
-            id="contactEmail"
-            onChange={handleContactEmail}
-          />
 
           <TextField variant=''
             variant="outlined"

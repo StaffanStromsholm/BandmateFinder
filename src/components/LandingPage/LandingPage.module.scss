@@ -25,57 +25,92 @@
         align-items: center;
         z-index: -1;
 
-        .enter {
-            color: black;
-            display: block;
-            font-family: 'Finger Paint', cursive;
-            font-size: 3rem;
-            color: #cc0066;
-            text-decoration: underline;
-            text-shadow: 0 0 5px rgb(129, 129, 129);
-            margin-bottom: 2rem;
-            width: 200px;
-            height: 150px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            // background-color: rgba(255, 255, 255, 0.596);
-            border: 2px solid #cc0066;
-        }
         a {
             text-decoration: none;
             color: white;
         }
-        .loginBtn {
-            text-align: center;
+
+        .plectrum {
+            animation: slideInPlectrum 1s ease-in-out;
         }
+
         .signup {
             text-decoration: underline;
             text-shadow: 0 0 3px rgb(59, 59, 59);
+            animation: slideInText 1s ease-in-out;
         }
-        .enterDiv{
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            // border: 1px solid black;
-            padding: 2rem;
-            background-color: rgba(240, 248, 255, 0.589);
-            background-color: #cc00665b;
-            border-radius: 40px;
-            margin-bottom: 1rem;
-
-            
-
-            
-            
-            
-        }
-        .landingRockHand {
-            width: 200px;
+        .rockhand {
+            display: none;
         }
       }
-      
 }
 
+// ============ queries ===========
+
+@media (max-width: 700px) {
+    .LandingPage {
+        #myVideo {
+            display: none;
+        }
+
+        .overlay {
+            background: rgb(255, 255, 255);
+            .signup {
+                color: black;
+                text-shadow: none;
+            }
+            .rockhand {
+                display: inline-block;
+                position: absolute;
+                bottom: 0;
+                animation: wave 3s ease-in-out infinite;
+                img{
+                    width: 100px;
+                }
+                @keyframes wave {
+                    0% {
+                        transform: rotate(0deg);
+                        margin-left: 0;
+                    }
+                    25% {
+                        transform: rotate(30deg);
+                        margin-left: 3rem;
+                    }
+                    50% {
+                        transform: rotate(0deg);
+                        margin-left: 0rem;
+                    }
+                    75%{
+                        transform: rotate(-30deg);
+                        margin-left: -3rem;
+                    }
+                }
+            }
+        }   
+        
+    }
+}
+
+// ========== animations =========
+
+@keyframes slideInPlectrum {
+    0% {
+      opacity: 0;
+      transform: rotate(0deg)
+    }
+    100% {
+        opacity: 1;
+        transform: rotate(360deg)
+    }
+  }
+
+  @keyframes slideInText {
+    0% {
+      opacity: 0;
+      padding-left: 100px;
+    }
+    100% {
+        opacity: 1;
+        padding-left: 0;
+    }
+  }

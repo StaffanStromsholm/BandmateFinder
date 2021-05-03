@@ -47,7 +47,7 @@ export default function FilterByInstrument({setFilterByInstrument}) {
       <h3>Search By Instrument</h3>
           
       <FormControl variant="outlined" className={classes.formControl}>
-        {/* <InputLabel id="demo-controlled-open-select-label">Instrument</InputLabel> */}
+        <InputLabel id="demo-controlled-open-select-label">Instrument</InputLabel>
         <Select
           labelId="demo-controlled-open-select-label"
           id="demo-controlled-open-select"

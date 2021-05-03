@@ -15,6 +15,14 @@ import { withRouter, useHistory } from 'react-router-dom';
 import { instruments, skillLevels, citiesInFinland } from '../../config';
 import styles from './EditProfile.module.scss';
 import * as api from '../../api/index.js';
+import { createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/styles";
+
+const theme = createMuiTheme({
+  palette: {
+    type: "dark"
+  }
+});
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -116,7 +124,8 @@ const EditProfile = props => {
             <h1>Edit Profile</h1>
             {console.log(user)}
             <img src={user.photo} />
-            <Container style={{backgroundColor:"white", padding: "1rem", borderRadius:"30px"}} component="main" maxWidth="xs">
+            <ThemeProvider theme={theme}>
+            <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <div >
                     
@@ -213,7 +222,7 @@ const EditProfile = props => {
                             ))}
                         </TextField>
 
-                        <FormControl component="fieldset" className={classes.formControl}>
+                        <FormControl required component="fieldset" className={classes.formControl}>
                             <FormLabel component="legend">I'm looking for</FormLabel>
                             <FormGroup>
                                 <FormControlLabel
@@ -264,6 +273,7 @@ const EditProfile = props => {
                     </form>
                 </div>
             </Container>
+            </ThemeProvider>
         </div>
     )
 }
