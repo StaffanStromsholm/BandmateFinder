@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/BandmateFinder-client/static/css/main.ff9409ab.chunk.css",
-    "main.js": "/BandmateFinder-client/static/js/main.6e41458a.chunk.js",
-    "main.js.map": "/BandmateFinder-client/static/js/main.6e41458a.chunk.js.map",
+    "main.js": "/BandmateFinder-client/static/js/main.78a45314.chunk.js",
+    "main.js.map": "/BandmateFinder-client/static/js/main.78a45314.chunk.js.map",
     "runtime-main.js": "/BandmateFinder-client/static/js/runtime-main.b726ba7f.js",
     "runtime-main.js.map": "/BandmateFinder-client/static/js/runtime-main.b726ba7f.js.map",
     "static/js/2.cd390d2a.chunk.js": "/BandmateFinder-client/static/js/2.cd390d2a.chunk.js",
@@ -31,6 +31,6 @@
     "static/js/runtime-main.b726ba7f.js",
     "static/js/2.cd390d2a.chunk.js",
     "static/css/main.ff9409ab.chunk.css",
-    "static/js/main.6e41458a.chunk.js"
+    "static/js/main.78a45314.chunk.js"
   ]
 }
