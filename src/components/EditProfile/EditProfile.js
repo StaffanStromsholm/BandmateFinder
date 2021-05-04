@@ -96,8 +96,6 @@ const EditProfile = props => {
         data.freeText = freeText;
         data.city = city
 
-        console.log(data);
-
         api.updateUser(user._id, data)
         .then(response =>  {
             console.log(response);

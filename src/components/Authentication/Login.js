@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,7 +11,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-//put this in useEffect?
 async function loginUser(credentials) {
   return fetch('https://bmf-backend.herokuapp.com/login', {
     method: 'POST',
@@ -47,7 +45,6 @@ async function loginUser(credentials) {
  }
 
 const Login = ({setToken, setUser}) => {
-  const endpoit = 'https://bmf-backend.herokuapp.com/login'
   const classes = useStyles();
   const { register, handleSubmit } = useForm();
   const [username, setUsername] = useState();
@@ -68,15 +65,21 @@ const Login = ({setToken, setUser}) => {
 
   return (
     <Container component="main" maxWidth="xs">
+
       <CssBaseline />
+
       <div className={classes.paper}>
+
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
+
         <Typography component="h1" variant="h5">
           Login
         </Typography>
+
         <form className={classes.form} noValidate onSubmit={handleSubmit((data) => submitData(data))}>
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -90,6 +93,7 @@ const Login = ({setToken, setUser}) => {
             autoFocus
             onChange={event => setUsername(event.target.value)}
           />
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -103,6 +107,7 @@ const Login = ({setToken, setUser}) => {
             autoComplete="current-password"
             onChange={event => setPassword(event.target.value)}
           />
+
           <Button
             type="submit"
             fullWidth
@@ -112,15 +117,21 @@ const Login = ({setToken, setUser}) => {
           >
             Login
           </Button>
+
           <Grid container>
             <Grid item>
+
               <Link href="/BandmateFinder-client/signup" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
+
             </Grid>
           </Grid>
+
         </form>
+
       </div>
+      
     </Container>
   );
 }

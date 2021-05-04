@@ -71,11 +71,11 @@ const Map = ({ users }) => {
           <div className={styles.infoWrapper}>
             <h1>{clickedUser.username} </h1>
 
-            <h3>{clickedUser.primaryInstrument}</h3>
-            <p>{clickedUser.city}</p>
-            <p>Looking for: {clickedUser.lookingFor.bands && 'bands'} {clickedUser.lookingFor.jams && 'jams'} {clickedUser.lookingFor.studioWork && 'studio work'} {clickedUser.lookingFor.songWriting && 'songwriting'}</p>
-            <p>{clickedUser.skillLevel}</p>
-            <p>{clickedUser.freeText.substring(0, 30)}...</p>
+            <h3> {clickedUser.primaryInstrument}</h3>
+            <p><i className="fas fa-map-marker"></i> {clickedUser.city}</p>
+            <p><i className="fas fa-binoculars"></i> Looking for: {clickedUser.lookingFor.bands && 'bands'} {clickedUser.lookingFor.jams && 'jams'} {clickedUser.lookingFor.studioWork && 'studio work'} {clickedUser.lookingFor.songWriting && 'songwriting'}</p>
+            <p><i className="fas fa-star"></i> {clickedUser.skillLevel}</p>
+            <p><i className="fas fa-user"></i> {clickedUser.freeText.substring(0, 30)}...</p>
             <Link to={`/BandmateFinder-client/users/${clickedUser.username}`}>Read More</Link>
           </div>
         </div>

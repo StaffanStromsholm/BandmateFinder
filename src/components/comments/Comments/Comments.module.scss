@@ -1,23 +1,39 @@
 .comments {
     ul {
         list-style-type: none;
+        padding-top: 1rem;
+        
+        .usersOwnComment {
+            background-color: rgb(39, 39, 39);
+        }
 
         li {
-            // padding-bottom: 1rem;
+            padding: .5rem 1rem;
             word-break: break-all;
+            background-color: rgb(56, 56, 56);
+            border-radius: 10px;
+            margin-bottom: .5rem;
+
             
-            a {
+            
+            p {
                 color: white;
                 display: inline-block;
-                font-size: 1.3rem;
-                margin-bottom: .2rem;
+                font-size: 1rem;
+                margin-bottom: 0;
                 padding: 0;
+                text-decoration: none;
+
+                .dot {
+                    font-weight: 700;
+                    color: #cc0066;
+                }
             }
 
             span {
                 font-size: .7rem;
                 display: inline-block;
-                margin-bottom: .9rem;
+                margin-bottom: .3rem;
             }
         }
         

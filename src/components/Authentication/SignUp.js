@@ -1,4 +1,9 @@
-import React, { useState, useEffect } from 'react';
+//react
+import React, { useState} from 'react';
+import { useForm } from 'react-hook-form';
+import { withRouter } from 'react-router-dom';
+
+//material UI
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,8 +20,8 @@ import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { useForm } from 'react-hook-form';
-import { withRouter } from 'react-router-dom';
+
+//utils
 import { instruments, skillLevels, citiesInFinland } from '../../config';
 import * as api from '../../api/index.js';
 
@@ -42,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignUp = props => {
-  const endpoit = 'https://bmf-backend.herokuapp.com/register'
   const classes = useStyles();
   const { history } = props;
   const { register, handleSubmit } = useForm();
@@ -117,21 +121,20 @@ const SignUp = props => {
 
   return (
     <Container component="main" maxWidth="xs">
+
       <CssBaseline />
+
       <div className={classes.paper}>
+
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
+
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
+
         <form encType='multipart/form-data' className={classes.form} noValidate onSubmit={handleSubmit((data) => submitData(data))}>
-{/* 
-          <input
-            type="file"
-            accept=".png, .jpg, .jpeg"
-            name="photo"
-            onChange={handlePhoto} /> */}
 
           <TextField
             variant="outlined"
@@ -145,6 +148,7 @@ const SignUp = props => {
             autoComplete="username"
             autoFocus
           />
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -157,6 +161,7 @@ const SignUp = props => {
             id="password"
             autoComplete="current-password"
           />
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -169,6 +174,7 @@ const SignUp = props => {
             id="confirmPassword"
             autoComplete="current-password"
           />
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -181,6 +187,7 @@ const SignUp = props => {
             id="contactEmail"
             onChange={handleContactEmail}
           />
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -201,6 +208,7 @@ const SignUp = props => {
               </MenuItem>
             ))}
           </TextField>
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -213,6 +221,7 @@ const SignUp = props => {
             id="postalCode"
             helperText="Used for more precise geolocation"
           />
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -257,24 +266,31 @@ const SignUp = props => {
           </TextField>
 
           <FormControl component="fieldset" className={classes.formControl}>
+
             <FormLabel component="legend">I'm looking for</FormLabel>
+
             <FormGroup>
+
               <FormControlLabel
                 control={<Checkbox checked={bands} onChange={handleLookingForChange} name='bands' />}
                 label='Bands'
               />
+
               <FormControlLabel
                 control={<Checkbox checked={jams} onChange={handleLookingForChange} name='jams' />}
                 label='Jams'
               />
+
               <FormControlLabel
                 control={<Checkbox checked={songWriting} onChange={handleLookingForChange} name='songWriting' />}
                 label='Song writing'
               />
+
               <FormControlLabel
                 control={<Checkbox checked={studioWork} onChange={handleLookingForChange} name='studioWork' />}
                 label='Studio work'
               />
+
             </FormGroup>
           </FormControl>
 
@@ -300,6 +316,7 @@ const SignUp = props => {
           >
             Sign up
           </Button>
+
           <Grid container>
 
             <Grid item>
@@ -307,7 +324,9 @@ const SignUp = props => {
                 {"Already have an account? Login"}
               </Link>
             </Grid>
+            
           </Grid>
+
         </form>
       </div>
     </Container>

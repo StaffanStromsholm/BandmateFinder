@@ -1,0 +1,17 @@
+.menuItems {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    p {
+        margin-right: 1rem;
+    }
+
+    .fas {
+        display: inline-block;
+        margin-left: 1rem;
+    }
+}
+

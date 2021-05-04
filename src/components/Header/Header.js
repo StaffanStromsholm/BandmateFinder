@@ -1,22 +1,24 @@
-import React from 'react';
+//React
+import React, { useEffect, useState } from 'react';
+import { withRouter, useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+//Material UI
 import { makeStyles } from '@material-ui/core/styles';
-import styles from './Header.module.scss'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { withRouter, useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import useToken from '../../Hooks/useToken';
 
+//Random
+import useToken from '../../Hooks/useToken';
 import plectrum from '../../images/plectrumLogo.png';
+import * as api from '../../api/index.js';
+import styles from './Header.module.scss';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,17 +32,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = ({setToken, loggedInUser}) => {
-    const history = useHistory();
-    const classes = useStyles();
-    const [auth, setAuth] = React.useState(true);
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
-    const { token } = useToken();
+const Header = ({ setToken, loggedInUser }) => {
+  const history = useHistory();
+  const classes = useStyles();
+  const { token } = useToken();
+  const [user, setUser] = useState();
 
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const open = Boolean(anchorEl);
+  
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -57,28 +58,37 @@ const Header = ({setToken, loggedInUser}) => {
     history.push('/BandmateFinder-client/login');
   }
 
+  useEffect(() => {
+    //get user info when Header component mounts
+    const unparsedUserName = localStorage.getItem('user');
+    const username = JSON.parse(unparsedUserName);
+
+    api.fetchUser(username)
+    .then(response => setUser(response.data));
+  })
+
   return (
     <div className={classes.root}>
       <FormGroup>
       </FormGroup>
-      <AppBar position="static" style={{backgroundColor: "#cc0066"}}>
+      <AppBar position="static" style={{ backgroundColor: "#cc0066" }}>
         <Toolbar>
-        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <img onClick={() => handleMenuClick('/BandmateFinder-client')} width="70px" src={plectrum}></img>
-        </IconButton>
-        <Typography variant="h6" className={classes.title}>
-        </Typography>
-        {token && (
-          <div>
-            
-            <IconButton onClick={handleMenu} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-              {loggedInUser && <Typography variant="h6" className={classes.title} style={{marginRight:"1rem"}}>
-                {loggedInUser}
-            </Typography>}
-              
-            <MenuIcon />
-            
           </IconButton>
+          <Typography variant="h6" className={classes.title}>
+          </Typography>
+          {token && (
+            <div>
+
+              <IconButton onClick={handleMenu} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                {loggedInUser && <Typography variant="h6" className={classes.title} style={{ marginRight: "1rem" }}>
+                  {loggedInUser}
+                </Typography>}
+
+                <MenuIcon />
+
+              </IconButton>
               <Menu
                 id="menu-appbar"
                 anchorEl={anchorEl}
@@ -94,9 +104,10 @@ const Header = ({setToken, loggedInUser}) => {
                 open={open}
                 onClose={() => setAnchorEl(null)}
               >
-                <MenuItem onClick={() => handleMenuClick('/BandmateFinder-client/edit-profile')}>Edit profile</MenuItem>
-                <MenuItem onClick={() => handleMenuClick('/BandmateFinder-client/search')}>Search users</MenuItem>
-                <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
+                <MenuItem onClick={() => handleMenuClick(`/BandmateFinder-client/users/${user.username}`)}><div className={styles.menuItems}><p>Profile</p><i className="fas fa-user"></i> </div></MenuItem>
+                <MenuItem onClick={() => handleMenuClick('/BandmateFinder-client/edit-profile')}><div className={styles.menuItems}><p>Edit</p><i class="fas fa-user-edit"></i></div></MenuItem>
+                <MenuItem onClick={() => handleMenuClick('/BandmateFinder-client/search')}><div className={styles.menuItems}><p>Search</p><i className="fas fa-search"></i></div></MenuItem>
+                <MenuItem onClick={() => handleLogout()}><div className={styles.menuItems}><p>Sign out</p> <i className="fas fa-sign-out-alt"></i> </div></MenuItem>
               </Menu>
             </div>
           )}
