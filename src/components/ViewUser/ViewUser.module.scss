@@ -5,6 +5,10 @@
     color: white;
     width: 90%;
 
+    .comments {
+        color: red;
+    }
+
     @keyframes slideInText {
         0% {
           opacity: 0;
@@ -58,7 +62,6 @@
     }
 
     .infoWrapper {
-        // border: 1px solid white;
         padding: 3rem;
         border-radius: 20px;
         margin-top: -3rem;
@@ -67,6 +70,19 @@
         position: absolute;
         width: 90vw;
         margin-left: 5vw;
+
+        .message {
+            position: absolute;
+            right: 0;
+            padding-right: 2rem;
+            font-size: 3rem;
+            margin-top: -4rem;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    
 
         h1 {
             margin-top: 1rem;
@@ -79,10 +95,14 @@
 }
 
 
-@media (min-width: 700px) {
+@media (max-width: 700px) {
     .ViewUser {
         .bio {
             font-size: 1rem;
+        }
+
+        .infoWrapper {
+            padding: 3rem 1.5rem;
         }
     }
 }

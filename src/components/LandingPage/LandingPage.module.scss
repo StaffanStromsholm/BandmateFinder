@@ -63,7 +63,7 @@
                 display: inline-block;
                 position: absolute;
                 bottom: 0;
-                animation: wave 3s ease-in-out infinite;
+                animation: wave 3s linear infinite;
                 img{
                     width: 100px;
                 }
@@ -73,16 +73,16 @@
                         margin-left: 0;
                     }
                     25% {
-                        transform: rotate(30deg);
-                        margin-left: 3rem;
+                        transform: rotate(20deg);
+                        margin-left: 6rem;
                     }
                     50% {
                         transform: rotate(0deg);
                         margin-left: 0rem;
                     }
                     75%{
-                        transform: rotate(-30deg);
-                        margin-left: -3rem;
+                        transform: rotate(-20deg);
+                        margin-left: -6rem;
                     }
                 }
             }

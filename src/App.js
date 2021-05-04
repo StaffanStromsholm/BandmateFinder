@@ -34,7 +34,7 @@ function App() {
         <Header setUser={setUser} setToken={setToken} />
         <SignUp setToken={setToken} />
       </Route>
-      <Redirect to='/bmf/login' />
+      <Redirect to='/BandmateFinder-client/login' />
     </Switch>
   )
 
@@ -53,24 +53,24 @@ function App() {
           <SignUp setToken={setToken} />
         </Route>
 
-        <Route exact path="/BandmateFinder-client">
-          <Header user={user} setToken={setToken} />
-          <LandingPage />
-        </Route>
-
         <Route exact path="/BandmateFinder-client/edit-profile">
           <Header user={user} setToken={setToken} />
           <EditProfile />
         </Route>
 
-        <Route path="/BandmateFinder-client/search" exact>
+        <Route path="/BandmateFinder-client/search">
           <Header user={user} setToken={setToken} />
           <SearchUsers />
         </Route>
 
-        <Route path="/BandmateFinder-client/users/:username">
+        <Route path="/BandmateFinder-client/users/:username" >
           <Header user={user} setToken={setToken} />
-          <ViewUser />
+          <ViewUser loggedInUser={user} />
+        </Route>
+
+        <Route path="/BandmateFinder-client">
+          <Header user={user} setToken={setToken} />
+          <LandingPage />
         </Route>
       </Switch>
 
