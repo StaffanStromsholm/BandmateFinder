@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/BandmateFinder-client/static/css/main.513550cc.chunk.css",
-    "main.js": "/BandmateFinder-client/static/js/main.d78234d2.chunk.js",
-    "main.js.map": "/BandmateFinder-client/static/js/main.d78234d2.chunk.js.map",
+    "main.css": "/BandmateFinder-client/static/css/main.b5a9642c.chunk.css",
+    "main.js": "/BandmateFinder-client/static/js/main.95a8d580.chunk.js",
+    "main.js.map": "/BandmateFinder-client/static/js/main.95a8d580.chunk.js.map",
     "runtime-main.js": "/BandmateFinder-client/static/js/runtime-main.b726ba7f.js",
     "runtime-main.js.map": "/BandmateFinder-client/static/js/runtime-main.b726ba7f.js.map",
-    "static/js/2.c4fca5cc.chunk.js": "/BandmateFinder-client/static/js/2.c4fca5cc.chunk.js",
-    "static/js/2.c4fca5cc.chunk.js.map": "/BandmateFinder-client/static/js/2.c4fca5cc.chunk.js.map",
+    "static/js/2.11a575e7.chunk.js": "/BandmateFinder-client/static/js/2.11a575e7.chunk.js",
+    "static/js/2.11a575e7.chunk.js.map": "/BandmateFinder-client/static/js/2.11a575e7.chunk.js.map",
     "index.html": "/BandmateFinder-client/index.html",
-    "static/css/main.513550cc.chunk.css.map": "/BandmateFinder-client/static/css/main.513550cc.chunk.css.map",
-    "static/js/2.c4fca5cc.chunk.js.LICENSE.txt": "/BandmateFinder-client/static/js/2.c4fca5cc.chunk.js.LICENSE.txt",
+    "static/css/main.b5a9642c.chunk.css.map": "/BandmateFinder-client/static/css/main.b5a9642c.chunk.css.map",
+    "static/js/2.11a575e7.chunk.js.LICENSE.txt": "/BandmateFinder-client/static/js/2.11a575e7.chunk.js.LICENSE.txt",
     "static/media/accordion.72f49547.png": "/BandmateFinder-client/static/media/accordion.72f49547.png",
     "static/media/acoustic-guitar.e093c483.png": "/BandmateFinder-client/static/media/acoustic-guitar.e093c483.png",
     "static/media/bass-guitar.2dd0d591.png": "/BandmateFinder-client/static/media/bass-guitar.2dd0d591.png",
@@ -29,8 +29,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.b726ba7f.js",
-    "static/js/2.c4fca5cc.chunk.js",
-    "static/css/main.513550cc.chunk.css",
-    "static/js/main.d78234d2.chunk.js"
+    "static/js/2.11a575e7.chunk.js",
+    "static/css/main.b5a9642c.chunk.css",
+    "static/js/main.95a8d580.chunk.js"
   ]
 }
