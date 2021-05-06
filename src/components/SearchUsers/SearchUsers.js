@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './styles.css';
-import MapCluster from '../Map/MapCluster.js';
+import MapCluster from './MapCluster.js';
 import * as api from '../../api/index.js';
-
 
 const SearchUsers = () => {
     const [users, setUsers] = useState([]);
@@ -16,6 +15,7 @@ const SearchUsers = () => {
             setIsLoading(false);
         })
     }, [])
+
     if (isLoading) {
         return <h1>Loading...</h1>
     }

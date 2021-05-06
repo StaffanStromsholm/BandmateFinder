@@ -1,81 +1,60 @@
-import { useState, useEffect } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import './App.css';
-import Header from './components/Header/Header.js';
-import EditProfile from './components/EditProfile/EditProfile.js';
-import SearchUsers from './components/SearchUsers/SearchUsers.js';
-import Login from './components/Authentication/Login.js';
-import SignUp from './components/Authentication/SignUp.js';
-import ViewUser from './components/ViewUser/ViewUser.js';
-import Footer from './components/Footer/Footer.js';
-import LandingPage from './components/LandingPage/LandingPage';
-import useToken from './Hooks/useToken';
+import { Switch, Route, Redirect } from "react-router-dom";
+import Header from "./components/Header/Header.js";
+import EditProfile from "./components/EditProfile/EditProfile.js";
+import SearchUsers from "./components/SearchUsers/SearchUsers.js";
+import Login from "./components/Authentication/Login.js";
+import SignUp from "./components/Authentication/SignUp.js";
+import ViewUser from "./components/ViewUser/ViewUser.js";
+import LandingPage from "./components/LandingPage/LandingPage";
+import useToken from "./Hooks/useToken";
 
 function App() {
-  const { token, setToken, user, setUser } = useToken();
-  const [loggedInUser, setLoggedInUser] = useState();
-  
-  const setLoggedInUserHandler = (user) => {
-    console.log(user)
-    setLoggedInUser(user);
-  }
+    const { token, setToken, user, setUser } = useToken();
 
-  if (!token) return (
-    <Switch>
-      <Route path="/BandmateFinder-client" exact>
-        <Header setUser={setUser} setToken={setToken}/>
-        <LandingPage />
-      </Route>
-      <Route path="/BandmateFinder-client/login" exact>
-        <Header setUser={setUser} setToken={setToken}/>
-        <Login setUser={setUser} setToken={setToken} />
-      </Route>
-      <Route path="/BandmateFinder-client/signup" exact>
-        <Header setUser={setUser} setToken={setToken} />
-        <SignUp setToken={setToken} />
-      </Route>
-      <Redirect to='/BandmateFinder-client/login' />
-    </Switch>
-  )
+    if (!token)
+        return (
+            <>
+                <Switch>
+                    <Route path="/BandmateFinder-client" exact>
+                        <LandingPage />
+                    </Route>
 
-  return (
-    <div className="App">
+                    <Route path="/BandmateFinder-client/login" exact>
+                        <Login setUser={setUser} setToken={setToken} />
+                    </Route>
 
-      <Switch>
+                    <Route path="/BandmateFinder-client/signup" exact>
+                        <SignUp setToken={setToken} />
+                    </Route>
 
-        <Route path="/BandmateFinder-client/login" exact>
-          <Header user={user} setToken={setToken} />
-          <Login setUser={setUser} setToken={setToken} />
-        </Route>
+                    <Redirect to="/BandmateFinder-client/login" />
+                </Switch>
+            </>
+        );
 
-        <Route path="/BandmateFinder-client/signup" exact>
-          <Header user={user} setToken={setToken} />
-          <SignUp setToken={setToken} />
-        </Route>
+    return (
+        <>
+            <Header user={user} setToken={setToken} />
 
-        <Route exact path="/BandmateFinder-client/edit-profile">
-          <Header user={user} setToken={setToken} />
-          <EditProfile />
-        </Route>
+            <Switch>
+                <Route exact path="/BandmateFinder-client/edit-profile">
+                    <EditProfile />
+                </Route>
 
-        <Route path="/BandmateFinder-client/search">
-          <Header user={user} setToken={setToken} />
-          <SearchUsers />
-        </Route>
+                <Route path="/BandmateFinder-client/search">
+                    <SearchUsers />
+                </Route>
 
-        <Route path="/BandmateFinder-client/users/:username" >
-          <Header user={user} setToken={setToken} />
-          <ViewUser loggedInUser={user} />
-        </Route>
+                <Route path="/BandmateFinder-client/users/:username">
+                    <ViewUser />
+                </Route>
 
-        <Route path="/BandmateFinder-client">
-          <Header user={user} setToken={setToken} />
-          <LandingPage />
-        </Route>
-      </Switch>
-
-    </div>
-  );
+                <Route path="/BandmateFinder-client">
+                    <SearchUsers />
+                </Route>
+            </Switch>
+        </>
+    );
 }
 
 export default App;

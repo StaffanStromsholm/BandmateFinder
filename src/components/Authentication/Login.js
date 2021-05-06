@@ -47,17 +47,11 @@ async function loginUser(credentials) {
 const Login = ({setToken, setUser}) => {
   const classes = useStyles();
   const { register, handleSubmit } = useForm();
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+  const [login, setLogin] = useState({username: '', password: ''})
   const history = useHistory();
 
-  const submitData = async(data) => {
-    // e.preventDefault();
-    const token = await loginUser({
-      username,
-      password
-    });
-    console.log(token);
+  const submitData = async() => {
+    const token = await loginUser(login);
     setToken(token);
     setUser(token.user)
     history.push('/BandmateFinder-client/search');
@@ -91,7 +85,7 @@ const Login = ({setToken, setUser}) => {
             name="username"
             autoComplete="username"
             autoFocus
-            onChange={event => setUsername(event.target.value)}
+            onChange={event => setLogin({...login, [event.target.name]: event.target.value})}
           />
 
           <TextField
@@ -105,7 +99,7 @@ const Login = ({setToken, setUser}) => {
             type="password"
             id="password"
             autoComplete="current-password"
-            onChange={event => setPassword(event.target.value)}
+            onChange={event => setLogin({...login, [event.target.name]: event.target.value})}
           />
 
           <Button

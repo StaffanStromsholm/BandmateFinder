@@ -22,7 +22,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
 //utils
-import { instruments, skillLevels, citiesInFinland } from '../../config';
+import { instruments, skillLevels, citiesInFinland } from '../../constants';
 import * as api from '../../api/index.js';
 
 

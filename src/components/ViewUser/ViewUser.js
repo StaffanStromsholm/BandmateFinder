@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { makeStyles, StylesProvider } from '@material-ui/core/styles';
 import styles from './ViewUser.module.scss';
 import * as api from '../../api/index.js';
-import { instruments } from '../../config';
+import { instruments } from '../../constants';
 import Comments from '../comments/Comments/Comments';
 import CreateComment from '../comments/CreateComment/CreateComment';
 
