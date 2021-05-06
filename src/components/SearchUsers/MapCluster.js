@@ -67,7 +67,9 @@ const Map = ({ users }) => {
 
                 </div>
 
-                
+                {showUserList && <UserList filteredUsers={filteredUsers} />}
+
+                {clickedUser && showUserCard && <ViewUser clickedUser={clickedUser} />}
 
             </div>
         </div>
