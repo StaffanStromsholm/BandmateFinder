@@ -34,9 +34,9 @@ const instruments = {
   'Singer': singer
 };
 
-const skillLevels = ['Beginner', 'Intermediate', 'Advance', 'Professional']
+const skillLevels = ['Beginner', 'Intermediate', 'Advance', 'Professional'];
 
-const lookingFor = ['Bands', 'Jams', 'Song writing', 'Studio work']
+const lookingFor = ['Bands', 'Jams', 'Song writing', 'Studio work'];
 
 const citiesInFinland = ['Äänekoski',
   'Åbo,',
