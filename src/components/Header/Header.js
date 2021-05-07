@@ -48,12 +48,12 @@ const Header = ({ setToken, loggedInUser }) => {
     };
 
     const handleMenuClick = (pageUrl) => {
-      history.push('/BandmateFinder-client')
-      //redirect hack
-      setTimeout(() => {
-        history.push(pageUrl);
-      }, 10)
-      setAnchorEl(null);
+        history.push("/BandmateFinder-client");
+        //redirect hack
+        setTimeout(() => {
+            history.push(pageUrl);
+        }, 10);
+        setAnchorEl(null);
     };
 
     const handleLogout = () => {
@@ -64,98 +64,128 @@ const Header = ({ setToken, loggedInUser }) => {
 
     useEffect(() => {
         //get user info when Header component mounts if there is no user defined
-        if(!user) {
-          const unparsedUserName = localStorage.getItem("user");
-          const username = JSON.parse(unparsedUserName);
 
-          api.fetchUser(username).then((response) => setUser(response.data));
-        }
+        const unparsedUserName = localStorage.getItem("user");
+        const username = JSON.parse(unparsedUserName);
+
+        api.fetchUser(username).then((response) => setUser(response.data));
     }, []);
 
     //make sure user is fetched before rendering
-    if(!user) {
-      return null;
+    if (!user) {
+        return null;
     }
 
     return (
         <div className={classes.root}>
-            <FormGroup></FormGroup>
-
-            <AppBar position="static" style={{ backgroundColor: "#cc0066" }}>
-
-                <Toolbar>
-
-                    <IconButton
-                        edge="start"
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="menu">
-                        <img onClick={() => handleMenuClick("/BandmateFinder-client")} width="70px" src={plectrum}></img>
-                    </IconButton>
-
-                      {/* hack to get items spaced apart. FIX */}
-                    <Typography variant="h6" className={classes.title}></Typography>
-
-                    <div>
+            <FormGroup>
+                <AppBar
+                    position="static"
+                    style={{ backgroundColor: "#cc0066" }}
+                >
+                    <Toolbar>
                         <IconButton
-                            onClick={handleMenu}
                             edge="start"
                             className={classes.menuButton}
                             color="inherit"
-                            aria-label="menu">
-
-                            <Typography
-                                variant="h6"
-                                className={classes.title}
-                                style={{ marginRight: "1rem" }}>
-                                  {user.username}
-                            </Typography>
-
-                            <MenuIcon />
-
-                        </IconButton>
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorEl}
-                            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                            keepMounted
-                            transformOrigin={{ vertical: "top", horizontal: "right" }}
-                            open={open}
-                            onClose={() => setAnchorEl(null)}>
-
-                            <MenuItem onClick={() => handleMenuClick(`/BandmateFinder-client/users/${user.username}`)}>
-                                <div className={styles.menuItems}>
-                                    <p>Profile</p>
-                                    <i className="fas fa-user"></i>{" "}
-                                </div>
-                            </MenuItem>
-
-                            <MenuItem onClick={() => handleMenuClick("/BandmateFinder-client/edit-profile")}>
-                                <div className={styles.menuItems}>
-                                    <p>Edit</p>
-                                    <i class="fas fa-user-edit"></i>
-                                </div>
-                            </MenuItem>
-
-                            <MenuItem
+                            aria-label="menu"
+                        >
+                            <img
                                 onClick={() =>
-                                    handleMenuClick(
-                                        "/BandmateFinder-client/search")}>
-                                <div className={styles.menuItems}>
-                                    <p>Search</p>
-                                    <i className="fas fa-search"></i>
-                                </div>
-                            </MenuItem>
-                            <MenuItem onClick={() => handleLogout()}>
-                                <div className={styles.menuItems}>
-                                    <p>Sign out</p>{" "}
-                                    <i className="fas fa-sign-out-alt"></i>{" "}
-                                </div>
-                            </MenuItem>
-                        </Menu>
-                    </div>
-                </Toolbar>
-            </AppBar>
+                                    handleMenuClick("/BandmateFinder-client")
+                                }
+                                width="70px"
+                                src={plectrum}
+                            ></img>
+                        </IconButton>
+
+                    
+                        <Typography
+                            variant="h6"
+                            className={classes.title}
+                        ></Typography>
+
+                        <div>
+                            <IconButton
+                                onClick={handleMenu}
+                                edge="start"
+                                className={classes.menuButton}
+                                color="inherit"
+                                aria-label="menu"
+                            >
+                                <Typography
+                                    variant="h6"
+                                    className={classes.title}
+                                    style={{ marginRight: "1rem" }}
+                                >
+                                </Typography>
+
+                                <MenuIcon />
+                            </IconButton>
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                    vertical: "top",
+                                    horizontal: "right",
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "right",
+                                }}
+                                open={open}
+                                onClose={() => setAnchorEl(null)}
+                            >
+                                <MenuItem
+                                    onClick={() =>
+                                        handleMenuClick(
+                                            `/BandmateFinder-client/users/${user.username}`
+                                        )
+                                    }
+                                >
+                                    <div className={styles.menuItems}>
+                                        <p>Profile</p>
+                                        <i className="fas fa-user"></i>{" "}
+                                    </div>
+                                </MenuItem>
+
+                                <MenuItem
+                                    onClick={() =>
+                                        handleMenuClick(
+                                            "/BandmateFinder-client/edit-profile"
+                                        )
+                                    }
+                                >
+                                    <div className={styles.menuItems}>
+                                        <p>Edit</p>
+                                        <i class="fas fa-user-edit"></i>
+                                    </div>
+                                </MenuItem>
+
+                                <MenuItem
+                                    onClick={() =>
+                                        handleMenuClick(
+                                            "/BandmateFinder-client/search"
+                                        )
+                                    }
+                                >
+                                    <div className={styles.menuItems}>
+                                        <p>Search</p>
+                                        <i className="fas fa-search"></i>
+                                    </div>
+                                </MenuItem>
+                                <MenuItem onClick={() => handleLogout()}>
+                                    <div className={styles.menuItems}>
+                                        <p>Sign out</p>{" "}
+                                        <i className="fas fa-sign-out-alt"></i>{" "}
+                                    </div>
+                                </MenuItem>
+                            </Menu>
+                        </div>
+                    </Toolbar>
+                </AppBar>
+            </FormGroup>
         </div>
     );
 };
