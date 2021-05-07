@@ -41,15 +41,18 @@ const Map = ({ users }) => {
     const mapRef = React.useRef(null);
 
     useLayoutEffect(() => {
-        renderMap(
-            mapRef,
-            location,
-            filteredUsers,
-            setClickedUser,
-            users,
-            setShowUserList,
-            setShowUserCard
-        );
+        if(filteredUsers){
+            renderMap(
+                mapRef,
+                location,
+                filteredUsers,
+                setClickedUser,
+                users,
+                setShowUserList,
+                setShowUserCard
+            );
+        }
+        
     }, [filteredUsers]);
 
     return (

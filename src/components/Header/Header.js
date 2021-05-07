@@ -64,11 +64,13 @@ const Header = ({ setToken, loggedInUser }) => {
 
     useEffect(() => {
         //get user info when Header component mounts
-        const unparsedUserName = localStorage.getItem("user");
-        const username = JSON.parse(unparsedUserName);
+        if(!user) {
+          const unparsedUserName = localStorage.getItem("user");
+          const username = JSON.parse(unparsedUserName);
 
-        api.fetchUser(username).then((response) => setUser(response.data));
-    });
+          api.fetchUser(username).then((response) => setUser(response.data));
+        }
+    }, []);
 
     //make sure user is fetched before rendering
     if(!user) {
