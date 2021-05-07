@@ -1,0 +1,69 @@
+.animation {
+    position: absolute;
+    background: black;
+    height: 100vh;
+    width: 100%;
+    top: 3rem;
+    z-index: -1;
+
+    .cogwheels {
+        position: absolute;
+        margin: 15rem auto;
+        height: 410px;
+        width: 200px;
+        position: relative;
+      }
+      
+      .cogwheels img {
+        height: 200px;
+      }
+      
+      .cogwheel1 {
+        animation: cogwheel-animation1 infinite linear 5s;
+        -webkit-animation: cogwheel-animation1 infinite linear 5s;
+      }
+      
+      .cogwheel2 {
+        animation: cogwheel-animation2 infinite linear 5s;
+        -webkit-animation: cogwheel-animation2 infinite linear 5s;
+        position: absolute;
+        right: 100px;
+        bottom: 50px;
+      }
+      
+      .cogwheel3 {
+        animation: cogwheel-animation2 infinite linear 5s;
+        -webkit-animation: cogwheel-animation2 infinite linear 5s;
+        position: absolute;
+        left: 100px;
+        bottom: 50px;
+      }
+      .cogwheel4 {
+        animation: cogwheel-animation2 infinite linear 5s;
+        -webkit-animation: cogwheel-animation2 infinite linear 5s;
+        position: absolute;
+        left: 100px;
+        top: -150px;
+      }
+      .cogwheel5 {
+        animation: cogwheel-animation2 infinite linear 5s;
+        -webkit-animation: cogwheel-animation2 infinite linear 5s;
+        position: absolute;
+        left: -100px;
+        top: -150px;
+      }
+      
+      @keyframes cogwheel-animation1 {
+        0% { transform: rotate(0deg); -webkit-transform: rotate(0deg); -moz-transform: rotate(0deg); -ms-transform: rotate(0deg); -o-transform: rotate(0deg); opacity: 0.1}
+        50% { transform: rotate(180deg); -webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -ms-transform: rotate(180deg); -o-transform: rotate(180deg); opacity: 1;}
+        100% { transform: rotate(360deg); -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -ms-transform: rotate(360deg); -o-transform: rotate(360deg); opacity: 0.1;}
+      }
+      
+      @keyframes cogwheel-animation2 {
+        0% { transform: rotate(0deg); -webkit-transform: rotate(0deg); -moz-transform: rotate(0deg); -ms-transform: rotate(0deg); -o-transform: rotate(0deg); opacity: 0.1;}
+        50% { transform: rotate(-180deg); -webkit-transform: rotate(-180deg); -moz-transform: rotate(-180deg); -ms-transform: rotate(-180deg); -o-transform: rotate(-180deg); opacity: 1;}
+        100% { transform: rotate(-360deg); -webkit-transform: rotate(-360deg); -moz-transform: rotate(-360deg); -ms-transform: rotate(-360deg); -o-transform: rotate(-360deg); opacity: 0.1;}
+      }
+  }
+
+ 

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import './styles.css';
+import styles from './Search.module.scss';
 import MapCluster from './MapCluster.js';
 import * as api from '../../api/index.js';
+import Loader from '../UI/Animation/Loader';
 
 const SearchUsers = () => {
     const [users, setUsers] = useState([]);
@@ -17,10 +18,10 @@ const SearchUsers = () => {
     }, [])
 
     if (isLoading) {
-        return <h1>Loading...</h1>
+        return <Loader />
     }
 
-    return (<div className="SearchUsers">
+    return (<div className={styles.SearchUsers}>
         <MapCluster users={users} />
     </div>
     );

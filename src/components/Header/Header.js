@@ -63,7 +63,7 @@ const Header = ({ setToken, loggedInUser }) => {
     };
 
     useEffect(() => {
-        //get user info when Header component mounts
+        //get user info when Header component mounts if there is no user defined
         if(!user) {
           const unparsedUserName = localStorage.getItem("user");
           const username = JSON.parse(unparsedUserName);

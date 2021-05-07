@@ -1,6 +1,5 @@
 .ViewUser {
     width: 319px;
-    // margin: 0 auto;
     padding-top: 2rem;
     color: white;
     width: 90%;
@@ -10,15 +9,15 @@
     }
 
     @keyframes slideInText {
+
         0% {
           opacity: 0;
           margin-left: 70vw;
-          ;
         }
+
         100% {
             opacity: 1;
             margin-left: 5vw;
-            
         }
       }
 
@@ -42,6 +41,10 @@
 
     .bio {
         font-size: .8rem;
+        line-height: 1.7;
+        margin-top: 3rem;
+        padding: 3rem 0 1rem 0;
+        border-top: 1px solid rgb(136, 136, 136);
     }
 
     .instrumentWrapper {
@@ -62,14 +65,17 @@
     }
 
     .infoWrapper {
-        padding: 3rem;
-        border-radius: 20px;
+        padding: 3rem 2rem;
         margin-top: -3rem;
         background-color: rgba(255, 255, 255, 0.068);
         animation: slideInText 1s ease-in-out;
         position: absolute;
+
+        // 
+  
         width: 90vw;
         margin-left: 5vw;
+        border-radius: 20px;
 
         .message {
             position: absolute;
@@ -95,14 +101,17 @@
 }
 
 
-@media (max-width: 700px) {
+@media (min-width: 700px) {
     .ViewUser {
         .bio {
             font-size: 1rem;
         }
 
         .infoWrapper {
-            padding: 3rem 1.5rem;
+            padding: 4rem;
+            width: 90vw;
+            margin-left: 5vw;
+            border-radius: 20px;
         }
     }
 }

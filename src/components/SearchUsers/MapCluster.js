@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
-import styles from "../SearchUsers/Map.module.scss";
+import styles from "../SearchUsers/Search.module.scss";
 import FilterByInstrument from "./filterByInstrument.js";
 import { makeStyles } from "@material-ui/core/styles";
 import UserList from './UserList';

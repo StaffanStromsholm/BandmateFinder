@@ -18,6 +18,9 @@ import Container from "@material-ui/core/Container";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 
+//Components
+import Loader from '../UI/Animation/Loader.js';
+
 //Misc
 import { instruments, skillLevels, citiesInFinland } from "../../constants";
 import * as api from "../../api/index.js";
@@ -124,8 +127,7 @@ const EditProfile = (props) => {
             });
     }, []);
 
-    if (isLoading || !user)
-        return <h1 className={styles.EditProfile}>Loading...</h1>;
+    if (isLoading || !user) return <Loader />;
 
     return (
         <div className={styles.EditProfile}>

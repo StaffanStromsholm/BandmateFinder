@@ -1,7 +1,20 @@
 .CreateComment {
     display: block;
-    margin-top: 4rem;
+    margin-top: 3rem;
     padding: 3rem 0 1rem 0;
     border-top: 1px solid rgb(136, 136, 136);
+}
 
+@media (min-width: 700px){
+    .CreateComment {
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items:flex-end;
+        }
+        button {
+            width: 200px;
+        }
+    }
 }

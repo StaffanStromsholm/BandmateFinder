@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { instruments } from '../../constants.js';
-import styles from '../SearchUsers/Map.module.scss';
+import styles from '../SearchUsers/Search.module.scss';
 
 export default function ViewUser({clickedUser}) {
     return (
@@ -13,7 +13,7 @@ export default function ViewUser({clickedUser}) {
                             />
                         </div>
                         <div className={styles.infoWrapper}>
-                            <h1>{clickedUser.username} </h1>
+                            <h2>{clickedUser.username} </h2>
 
                             <h3> {clickedUser.primaryInstrument}</h3>
                             <p>
@@ -34,13 +34,13 @@ export default function ViewUser({clickedUser}) {
                                 {clickedUser.skillLevel}
                             </p>
                             <p>
-                                <i className="fas fa-user"></i>{" "}
+                                <i class="fas fa-address-card"></i>{" "}
                                 {clickedUser.freeText.substring(0, 30)}...
                             </p>
                             <Link
                                 to={`/BandmateFinder-client/users/${clickedUser.username}`}
                             >
-                                Read More
+                                Visit profile
                             </Link>
                         </div>
                     </div>
