@@ -14,7 +14,8 @@ function App() {
     if (!token)
         return (
             <>
-            <Header user={user} setToken={setToken}/>
+                <Header user={user} setToken={setToken} />
+                
                 <Switch>
                     <Route path="/BandmateFinder-client" exact>
                         <LandingPage />
@@ -35,7 +36,7 @@ function App() {
 
     return (
         <>
-            <Header  />
+            <Header user={user} setToken={setToken} />
 
             <Switch>
                 <Route exact path="/BandmateFinder-client/edit-profile">
