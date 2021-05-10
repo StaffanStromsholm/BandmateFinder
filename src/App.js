@@ -1,6 +1,5 @@
 import { Switch, Route, Redirect } from "react-router-dom";
 import Header from "./components/Header/Header.js";
-import EditProfile from "./components/EditProfile/EditProfile.js";
 import SearchUsers from "./components/SearchUsers/SearchUsers.js";
 import Login from "./components/Authentication/Login.js";
 import SignUp from "./components/Authentication/SignUp.js";
@@ -38,9 +37,6 @@ function App() {
             <Header user={user} setToken={setToken} />
 
             <Switch>
-                <Route exact path="/BandmateFinder-client/edit-profile">
-                    <EditProfile />
-                </Route>
 
                 <Route path="/BandmateFinder-client/search">
                     <SearchUsers />

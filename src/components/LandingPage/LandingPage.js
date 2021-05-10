@@ -12,10 +12,9 @@ export default function LandingPage() {
                 <source src={bgVideo} type="video/mp4" />
             </video>
             <div className={styles.overlay}>
-                {/* <Link className={styles.enter} to="/login">Login</Link> */}
-                <Link className={styles.plectrum} to="/BandmateFinder-client/login"><img src={plectrumEnter} /></Link>
+                <Link className={styles.plectrum} to="/BandmateFinder-client/login"><img src={plectrumEnter} alt="plectrum" /></Link>
                 <Link className={styles.signup} to="/BandmateFinder-client/signup">Not a user yet? Sign up here.</Link>
-                <div className={styles.rockhand}><img src={rockhand}/></div>
+                <div className={styles.rockhand}><img src={rockhand} alt="Rock hand"/></div>
             </div>
         </div>
     )

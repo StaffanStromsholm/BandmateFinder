@@ -4,6 +4,7 @@ import styles from "../SearchUsers/Search.module.scss";
 import { instruments } from "../../constants.js";
 
 export default function UserList({ filteredUsers }) {
+
     return (
         <div className={styles.userList}>
             {/* sort uers alphabetically by city */}
@@ -17,6 +18,7 @@ export default function UserList({ filteredUsers }) {
                             <img
                                 className={styles.instrument}
                                 src={instruments[user.primaryInstrument]}
+                                alt={user.primaryInstrument}
                             />
                         </div>
                         <div className={styles.infoWrapper}>

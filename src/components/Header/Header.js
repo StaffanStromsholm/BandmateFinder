@@ -15,7 +15,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 
 //Random
-import useToken from "../../Hooks/useToken";
+// import useToken from "../../Hooks/useToken";
 import plectrum from "../../images/plectrumLogo.png";
 import * as api from "../../api/index.js";
 import styles from "./Header.module.scss";
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 const Header = ({ setToken, loggedInUser }) => {
     const history = useHistory();
     const classes = useStyles();
-    const { token } = useToken();
+    // const { token } = useToken();
     const [user, setUser] = useState();
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -71,11 +71,6 @@ const Header = ({ setToken, loggedInUser }) => {
         api.fetchUser(username).then((response) => setUser(response.data));
     }, []);
 
-    //make sure user is fetched before rendering
-    if (!user) {
-        return null;
-    }
-
     return (
         <div className={classes.root}>
             <FormGroup>
@@ -94,6 +89,7 @@ const Header = ({ setToken, loggedInUser }) => {
                                 onClick={() =>
                                     handleMenuClick("/BandmateFinder-client")
                                 }
+                                alt='Avatar'
                                 width="70px"
                                 src={plectrum}
                             ></img>
@@ -106,7 +102,7 @@ const Header = ({ setToken, loggedInUser }) => {
                         ></Typography>
 
                         <div>
-                            <IconButton
+                            { user && <IconButton
                                 onClick={handleMenu}
                                 edge="start"
                                 className={classes.menuButton}
@@ -121,7 +117,7 @@ const Header = ({ setToken, loggedInUser }) => {
                                 </Typography>
 
                                 <MenuIcon />
-                            </IconButton>
+                            </IconButton>}
                             <Menu
                                 id="menu-appbar"
                                 anchorEl={anchorEl}
@@ -147,19 +143,6 @@ const Header = ({ setToken, loggedInUser }) => {
                                     <div className={styles.menuItems}>
                                         <p>Profile</p>
                                         <i className="fas fa-user"></i>{" "}
-                                    </div>
-                                </MenuItem>
-
-                                <MenuItem
-                                    onClick={() =>
-                                        handleMenuClick(
-                                            "/BandmateFinder-client/edit-profile"
-                                        )
-                                    }
-                                >
-                                    <div className={styles.menuItems}>
-                                        <p>Edit</p>
-                                        <i class="fas fa-user-edit"></i>
                                     </div>
                                 </MenuItem>
 
@@ -192,7 +175,7 @@ const Header = ({ setToken, loggedInUser }) => {
 
 export default withRouter(Header);
 
-Header.propTypes = {
-    setToken: PropTypes.func.isRequired,
-    setUser: PropTypes.func.isRequired,
-};
+// Header.propTypes = {
+//     setToken: PropTypes.func.isRequired,
+//     setUser: PropTypes.func.isRequired,
+// };

@@ -2,32 +2,25 @@ import React, { useLayoutEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import styles from "../SearchUsers/Search.module.scss";
 import FilterByInstrument from "./filterByInstrument.js";
-import { makeStyles } from "@material-ui/core/styles";
 import UserList from './UserList';
-import ViewUser from './ViewUserCard';
+import ViewUserCard from './ViewUserCard';
 import { renderMap } from '../../utils.js';
 
-const useStyles = makeStyles({
-    root: {
-        maxWidth: 345,
-    },
-    media: {
-        height: 140,
-    },
-});
-
 const Map = ({ users }) => {
-    const [location, setLocation] = useState("Helsinki");
     const [clickedUser, setClickedUser] = useState(null);
     const [filterByInstrument, setFilterByInstrument] = useState("");
     const [filteredUsers, setFilteredUsers] = useState(users);
     const [showUserList, setShowUserList] = useState(false);
     const [showUserCard, setShowUserCard] = useState(false);
 
+    //default location needed to make the map render correctly
+    const location = "Helsinki";
+
     const setFilterByInstrumentHandler = (instrument) => {
         setShowUserCard(false);
         setShowUserList(true);
         if (instrument === "All") {
+            console.log(users);
             setFilteredUsers(users);
         } else {
             setFilteredUsers(
@@ -41,7 +34,7 @@ const Map = ({ users }) => {
     const mapRef = React.useRef(null);
 
     useLayoutEffect(() => {
-        if(filteredUsers){
+
             renderMap(
                 mapRef,
                 location,
@@ -51,7 +44,6 @@ const Map = ({ users }) => {
                 setShowUserList,
                 setShowUserCard
             );
-        }
         
     }, [filteredUsers]);
 
@@ -72,7 +64,7 @@ const Map = ({ users }) => {
 
                 {showUserList && <UserList filteredUsers={filteredUsers} />}
 
-                {clickedUser && showUserCard && <ViewUser clickedUser={clickedUser} />}
+                {clickedUser && showUserCard && <ViewUserCard clickedUser={clickedUser} />}
 
             </div>
         </div>

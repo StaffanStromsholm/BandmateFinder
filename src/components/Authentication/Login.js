@@ -1,17 +1,26 @@
 import React, { useState} from 'react';
+import {Link} from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
+import { createMuiTheme } from "@material-ui/core/styles";
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+import { ThemeProvider } from "@material-ui/styles";
 import PropTypes from 'prop-types';
+import styles from './auth.module.scss';
+
+const theme = createMuiTheme({
+  palette: {
+      type: "dark",
+  },
+});
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -22,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: '#cc0066',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -33,7 +42,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-async function loginUser(credentials) {
+
+const Login = ({setToken, setUser}) => {
+  const classes = useStyles();
+  const { register, handleSubmit } = useForm();
+  const [login, setLogin] = useState({username: '', password: ''})
+  const [error, setError] = useState(null);
+  const history = useHistory();
+
+  const loginUser = async(credentials) => {
   return fetch('https://bmf-backend.herokuapp.com/login', {
     method: 'POST',
     headers: {
@@ -42,34 +59,39 @@ async function loginUser(credentials) {
     body: JSON.stringify(credentials)
   })
     .then(data => data.json())
+    .catch(error => setError(error))
  }
 
-const Login = ({setToken, setUser}) => {
-  const classes = useStyles();
-  const { register, handleSubmit } = useForm();
-  const [login, setLogin] = useState({username: '', password: ''})
-  const history = useHistory();
+ const onChangeHandler = (e) => {
+  setLogin({...login, [e.target.name]: e.target.value})
+  setError(false);
+ }
 
   const submitData = async() => {
     const token = await loginUser(login);
+    if(!token) return
+
     setToken(token);
     setUser(token.user)
     history.push('/BandmateFinder-client/search');
   }
 
   return (
+    <ThemeProvider theme={theme}>
+
     <Container component="main" maxWidth="xs">
 
       <CssBaseline />
-
+      <Link className={styles.back} to='/BandmateFinder-client'><i className="fas fa-chevron-left"></i></Link>
       <div className={classes.paper}>
+       
 
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
 
         <Typography component="h1" variant="h5">
-          Login
+          {!error && 'Login'} {error && <p className={styles.error}>Something went wrong, please try again</p>}
         </Typography>
 
         <form className={classes.form} noValidate onSubmit={handleSubmit((data) => submitData(data))}>
@@ -85,7 +107,7 @@ const Login = ({setToken, setUser}) => {
             name="username"
             autoComplete="username"
             autoFocus
-            onChange={event => setLogin({...login, [event.target.name]: event.target.value})}
+            onChange={onChangeHandler}
           />
 
           <TextField
@@ -99,7 +121,7 @@ const Login = ({setToken, setUser}) => {
             type="password"
             id="password"
             autoComplete="current-password"
-            onChange={event => setLogin({...login, [event.target.name]: event.target.value})}
+            onChange={onChangeHandler}
           />
 
           <Button
@@ -115,7 +137,7 @@ const Login = ({setToken, setUser}) => {
           <Grid container>
             <Grid item>
 
-              <Link href="/BandmateFinder-client/signup" variant="body2">
+              <Link className={styles.loginLink} to="/BandmateFinder-client/signup" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
 
@@ -127,6 +149,7 @@ const Login = ({setToken, setUser}) => {
       </div>
       
     </Container>
+    </ThemeProvider>
   );
 }
 

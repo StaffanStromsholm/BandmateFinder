@@ -10,6 +10,7 @@ export default function ViewUser({clickedUser}) {
                             <img
                                 className={styles.instrument}
                                 src={instruments[clickedUser.primaryInstrument]}
+                                alt={clickedUser.primaryInstrument}
                             />
                         </div>
                         <div className={styles.infoWrapper}>
@@ -34,7 +35,7 @@ export default function ViewUser({clickedUser}) {
                                 {clickedUser.skillLevel}
                             </p>
                             <p>
-                                <i class="fas fa-address-card"></i>{" "}
+                                <i className="fas fa-address-card"></i>{" "}
                                 {clickedUser.freeText.substring(0, 30)}...
                             </p>
                             <Link

@@ -58,60 +58,41 @@ const EditProfile = (props) => {
     const classes = useStyles();
     const history = useHistory();
     const { register, handleSubmit } = useForm();
-    const [instrument, setInstrument] = useState();
-    const [skillLevel, setSKillLevel] = useState("");
-    const [city, setCity] = useState();
     const [checkedState, setCheckedState] = useState({
         bands: false,
         jams: false,
         songWriting: false,
         studioWork: false,
     });
-    const [freeText, setFreeText] = useState("");
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [updatedUser, setUpdatedUser] = useState(user);
 
     const handleLookingForChange = (event) => {
         setCheckedState({
             ...checkedState,
             [event.target.name]: event.target.checked,
         });
+        setUpdatedUser({...updatedUser, lookingFor: {bands, jams, studioWork, songWriting}})
     };
 
     const { bands, jams, songWriting, studioWork } = checkedState;
 
-    const handleInstrumentChange = (event) => {
-        setInstrument(event.target.value);
-        console.log(event.target.value);
-    };
+    const onChangeHandler = (e) => {
+        setUpdatedUser({...updatedUser, [e.target.name]: e.target.value})
+    }
 
-    const handleCityChange = (event) => {
-        setCity(event.target.value);
-    };
+    const submitData = () => {
+        if(!data.username || !data.password || !data.confirmPassword || !data.email || !data.city || !data.postalCode || !data.primaryInstrument || !data.lookingFor || !data.freeText){
+            setInfoMissing(true);
+            return;
+          }
+        
+        console.log(updatedUser);
 
-    const handleSkillLevelChange = (event) => {
-        setSKillLevel(event.target.value);
-        console.log(event.target.value);
-    };
-
-    const handleBioChange = (e) => {
-        setFreeText(e.target.value);
-    };
-
-    const submitData = (data) => {
-        if (data.password !== data.confirmPassword) return;
-
-        const lookingFor = { bands, jams, studioWork, songWriting };
-        data.primaryInstrument = instrument;
-        data.skillLevel = skillLevel;
-        data.lookingFor = lookingFor;
-        data.freeText = freeText;
-        data.city = city;
-
-        api.updateUser(user._id, data).then((response) => {
-            console.log(response);
-            history.push("/BandmateFinder-client/search");
-        });
+        api.createUser(data)
+        .then(response => history.push('/BandmateFinder-client/login'))
+        .catch(error => console.log(error))
     };
 
     useEffect(() => {
@@ -123,7 +104,7 @@ const EditProfile = (props) => {
             .then((response) => setUser(response.data))
             .then(() => {
                 setIsLoading(false);
-                setInstrument(user.primaryInstrument);
+                // setInstrument(user.primaryInstrument);
             });
     }, []);
 
@@ -132,7 +113,6 @@ const EditProfile = (props) => {
     return (
         <div className={styles.EditProfile}>
             <h1>Edit Profile</h1>
-            <img src={user.photo} />
             <ThemeProvider theme={theme}>
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
@@ -152,8 +132,48 @@ const EditProfile = (props) => {
                                 name="username"
                                 autoComplete="username"
                                 autoFocus
-                                defaultValue={user.username}
+                                defaultValue={user.username || ''}
+                                onChange={onChangeHandler}
                             />
+
+<TextField
+            variant="outlined"
+            margin="normal"
+            inputRef={register}
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+          />
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            inputRef={register}
+            required
+            fullWidth
+            name="confirmPassword"
+            label="Confirm Password"
+            type="password"
+            id="confirmPassword"
+            autoComplete="current-password"
+          />
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            inputRef={register}
+            required
+            fullWidth
+            name="contactEmail"
+            label="Email for contacting you"
+            type="contactEmail"
+            id="contactEmail"
+            onChange={handleContactEmail}
+          />
 
                             <TextField
                                 variant="outlined"
@@ -163,12 +183,10 @@ const EditProfile = (props) => {
                                 fullWidth
                                 id="city"
                                 select
-                                //set value to user.skillLevel when rendered first time
-                                value={city || user.city}
                                 name="city"
                                 label="City"
                                 type="text"
-                                onChange={handleCityChange}
+                                onChange={onChangeHandler}
                             >
                                 {citiesInFinland.map((city, index) => (
                                     <MenuItem key={index} value={city}>
@@ -180,7 +198,7 @@ const EditProfile = (props) => {
                             <TextField
                                 variant="outlined"
                                 margin="normal"
-                                inputRef={register}
+                                // inputRef={register}
                                 required
                                 fullWidth
                                 name="postalCode"
@@ -188,22 +206,20 @@ const EditProfile = (props) => {
                                 type="text"
                                 id="postalCode"
                                 autoComplete="postalCode"
-                                defaultValue={user.postalCode}
+                                onChange={onChangeHandler}
                             />
 
                             <TextField
                                 variant="outlined"
                                 margin="normal"
-                                inputRef={register}
                                 required
                                 fullWidth
                                 id="mainInstrument"
                                 select
-                                value={instrument || user.primaryInstrument}
-                                name="instrument"
+                                name="primaryInstrument"
                                 label="Instrument"
                                 type="text"
-                                onChange={handleInstrumentChange}
+                                onChange={onChangeHandler}
                                 helperText="Please select your main instrument"
                             >
                                 {Object.keys(instruments).map((key, index) => (
@@ -213,7 +229,7 @@ const EditProfile = (props) => {
                                 ))}
                             </TextField>
 
-                            <TextField
+                             <TextField
                                 variant="outlined"
                                 margin="normal"
                                 inputRef={register}
@@ -222,11 +238,10 @@ const EditProfile = (props) => {
                                 id="skillLevel"
                                 select
                                 //set value to user.skillLevel when rendered first time
-                                value={skillLevel || user.skillLevel}
                                 name="skillLevel"
                                 label="Skill Level"
                                 type="text"
-                                onChange={handleSkillLevelChange}
+                                onChange={onChangeHandler}
                             >
                                 {skillLevels.map((skillLevel, index) => (
                                     <MenuItem key={index} value={skillLevel}>
@@ -302,7 +317,6 @@ const EditProfile = (props) => {
                             </FormControl>
 
                             <TextField
-                                variant=""
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -313,7 +327,7 @@ const EditProfile = (props) => {
                                 label="Write about yourself, genres you play, your bands, your gear"
                                 rows={5}
                                 rowsMax={10}
-                                onChange={handleBioChange}
+                                onChange={onChangeHandler}
                                 inputRef={register}
                                 defaultValue={user.freeText}
                             />
