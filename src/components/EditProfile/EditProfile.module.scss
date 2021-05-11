@@ -8,3 +8,20 @@
         margin:0;
     }
 }
+
+.back{
+    color: white;
+    text-decoration: none;
+    font-size: 1.8rem;
+    position: absolute;
+}
+
+.error {
+    color: #cc0066;
+    background-color: rgba(245, 245, 245, 0.884);
+    padding: .7rem;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1rem;
+    margin: 1rem 0;
+}

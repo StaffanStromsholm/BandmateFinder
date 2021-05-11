@@ -1,27 +1,34 @@
+//React
 import React, { useState} from 'react';
 import {Link} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+
+//Material-UI
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import { createMuiTheme } from "@material-ui/core/styles";
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { createMuiTheme } from "@material-ui/core/styles";
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
 import { ThemeProvider } from "@material-ui/styles";
+import Typography from '@material-ui/core/Typography';
+
+//Misc
 import PropTypes from 'prop-types';
 import styles from './auth.module.scss';
 
+//Material-UI dark theme
 const theme = createMuiTheme({
   palette: {
       type: "dark",
   },
 });
 
+//styling for Material-UI components
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -32,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: '#cc0066',
+    color: "white"
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -44,12 +52,14 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Login = ({setToken, setUser}) => {
-  const classes = useStyles();
-  const { register, handleSubmit } = useForm();
   const [login, setLogin] = useState({username: '', password: ''})
   const [error, setError] = useState(null);
-  const history = useHistory();
 
+  const history = useHistory();
+  const classes = useStyles();
+  const { register, handleSubmit } = useForm();
+
+  //check if username and password is found in the DB
   const loginUser = async(credentials) => {
   return fetch('https://bmf-backend.herokuapp.com/login', {
     method: 'POST',

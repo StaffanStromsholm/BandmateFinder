@@ -52,7 +52,7 @@ export default function CreateComment({ user }) {
     const submitHandler = (e) => {
         console.log(loggedInUser);
         e.preventDefault();
-        const author = localStorage.getItem('user')
+        const author = sessionStorage.getItem('user')
         axios.post(`https://bmf-backend.herokuapp.com/users/${user._id}/comments`, { comment, commentReceiverId: user._id, authorId: loggedInUser._id, authorUsername: loggedInUser.username })
         //refresh the page by first pushing root url then current url with slight delay
         .then(() => history.push('/BandmateFinder-client'))
@@ -60,7 +60,7 @@ export default function CreateComment({ user }) {
     }
 
     useEffect(() => {
-        const unparsedsedLoggedInUser = localStorage.getItem('user');
+        const unparsedsedLoggedInUser = sessionStorage.getItem('user');
         const loggedInUser = JSON.parse(unparsedsedLoggedInUser);
         api.fetchUser(loggedInUser)
             .then(response => setLoggedInUser(response.data));

@@ -6,19 +6,19 @@ import { useForm } from "react-hook-form";
 //Material UI
 import Avatar from '@material-ui/core/Avatar';
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import FormLabel from "@material-ui/core/FormLabel";
-import Grid from '@material-ui/core/Grid';
-import FormControl from "@material-ui/core/FormControl";
-import FormGroup from "@material-ui/core/FormGroup";
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { createMuiTheme } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormLabel from "@material-ui/core/FormLabel";
+import Grid from '@material-ui/core/Grid';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { makeStyles } from "@material-ui/core/styles";
+import MenuItem from "@material-ui/core/MenuItem";
+import TextField from "@material-ui/core/TextField";
 import { ThemeProvider } from "@material-ui/styles";
 import Typography from '@material-ui/core/Typography';
 
@@ -29,12 +29,14 @@ import * as api from "../../api/index.js";
 //styles
 import styles from "./auth.module.scss";
 
+//Material-UI dark theme
 const theme = createMuiTheme({
   palette: {
     type: "dark",
   },
 });
 
+//Material-UI styles
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -45,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: "#cc0066",
+    color: "white"
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -57,17 +60,11 @@ const useStyles = makeStyles((theme) => ({
 
 const EditProfile = () => {
   //state
-  const classes = useStyles();
-  const history = useHistory();
-  const { register, handleSubmit } = useForm();
-  const [checkedState, setCheckedState] = useState({
-    bands: false,
-    jams: false,
-    songWriting: false,
-    studioWork: false,
-  });
   const [user, setUser] = useState('');
   const [infoMissing, setInfoMissing] = useState()
+  const [passwordsDontMatch, setPasswordsDontMatch] = useState();
+  const [error, setError] = useState();
+
   const handleLookingForChange = (event) => {
     setCheckedState({
       ...checkedState,
@@ -75,9 +72,20 @@ const EditProfile = () => {
     });
     setUser({ ...user, lookingFor: { bands, jams, studioWork, songWriting } })
   };
+
+  const [checkedState, setCheckedState] = useState({
+    bands: false,
+    jams: false,
+    songWriting: false,
+    studioWork: false,
+  });
+
   const { bands, jams, songWriting, studioWork } = checkedState;
-  const [passwordsDontMatch, setPasswordsDontMatch] = useState();
-  const [error, setError] = useState();
+
+//Hooks
+  const classes = useStyles();
+  const history = useHistory();
+  const { register, handleSubmit } = useForm();
 
   //functions
   const onChangeHandler = (e) => {

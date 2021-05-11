@@ -6,6 +6,7 @@ import SignUp from "./components/Authentication/SignUp.js";
 import ViewUser from "./components/ViewUser/ViewUser.js";
 import LandingPage from "./components/LandingPage/LandingPage";
 import useToken from "./Hooks/useToken";
+import EditProfile from "./components/EditProfile/EditProfile.js";
 
 function App() {
     const { token, setToken, user, setUser } = useToken();
@@ -34,21 +35,26 @@ function App() {
 
     return (
         <>
-            <Header user={user} setToken={setToken} />
+            <Header token={token} loggedInUser={user} setToken={setToken} />
 
             <Switch>
 
-                <Route path="/BandmateFinder-client/search">
+                <Route path="/BandmateFinder-client/search" exact>
                     <SearchUsers />
                 </Route>
 
-                <Route path="/BandmateFinder-client/users/:username">
+                <Route path="/BandmateFinder-client/users/:username" exact>
                     <ViewUser />
                 </Route>
+{/* 
+                <Route path="/BandmateFinder-client/editprofile" exact>
+                    <EditProfile setToken={setToken} setUserHook={setUser} loggedInUser={user} />
+                </Route> */}
 
-                <Route path="/BandmateFinder-client">
+                <Route path="/BandmateFinder-client" exact>
                     <SearchUsers />
                 </Route>
+                
             </Switch>
         </>
     );

@@ -28,7 +28,7 @@ const ViewUser = () => {
     useEffect(() => {
         setIsLoading(true);
         //grab logged in users info
-        const unparsedUser = localStorage.getItem("user");
+        const unparsedUser = sessionStorage.getItem("user");
         const parsedUser = JSON.parse(unparsedUser);
         api.fetchUser(parsedUser).then((response) =>
             setLoggedInUser(response.data)

@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Header = ({ setToken, loggedInUser }) => {
+const Header = ({ setToken, token, loggedInUser }) => {
     const history = useHistory();
     const classes = useStyles();
     // const { token } = useToken();
@@ -57,19 +57,10 @@ const Header = ({ setToken, loggedInUser }) => {
     };
 
     const handleLogout = () => {
-        localStorage.removeItem("token");
+        sessionStorage.removeItem("token");
         setToken("");
         history.push("/BandmateFinder-client/login");
     };
-
-    useEffect(() => {
-        //get user info when Header component mounts if there is no user defined
-
-        const unparsedUserName = localStorage.getItem("user");
-        const username = JSON.parse(unparsedUserName);
-
-        api.fetchUser(username).then((response) => setUser(response.data));
-    }, []);
 
     return (
         <div className={classes.root}>
@@ -102,7 +93,7 @@ const Header = ({ setToken, loggedInUser }) => {
                         ></Typography>
 
                         <div>
-                            { user && <IconButton
+                            { loggedInUser && <IconButton
                                 onClick={handleMenu}
                                 edge="start"
                                 className={classes.menuButton}
@@ -114,6 +105,7 @@ const Header = ({ setToken, loggedInUser }) => {
                                     className={classes.title}
                                     style={{ marginRight: "1rem" }}
                                 >
+                                    {loggedInUser}
                                 </Typography>
 
                                 <MenuIcon />
@@ -136,7 +128,7 @@ const Header = ({ setToken, loggedInUser }) => {
                                 <MenuItem
                                     onClick={() =>
                                         handleMenuClick(
-                                            `/BandmateFinder-client/users/${user.username}`
+                                            `/BandmateFinder-client/users/${loggedInUser}`
                                         )
                                     }
                                 >
