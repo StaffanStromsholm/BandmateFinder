@@ -16,3 +16,7 @@ To run the project:
 npm install
 npm start
 ```
+
+![](gif1.gif)
+![](gif2.gif)
+![](gif3.gif)
